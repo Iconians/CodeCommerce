@@ -1,0 +1,52 @@
+.btn-inputs {
+  width: 29.5rem;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.save-btn {
+  margin-top: 20px;
+  background-color: red;  
+}
+
+.strikeDiv {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 20px;
+}
+
+.strikeDiv > span {
+  position: relative;
+  display: inline-block;
+}
+
+.strikeDiv > span:before,
+.strikeDiv > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  border-top: 4px solid lightgray;
+}
+
+.strikeDiv > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strikeDiv > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+.facebook-btn {background-color: blue;}
+
+.terms-div {font-size: 15px;}
+
+.cancel-div, .terms-privacy-div {margin-top: 10px;}
+
+.span-pipe {margin: 10px;}

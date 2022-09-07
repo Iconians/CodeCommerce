@@ -1,0 +1,30 @@
+.page-header {
+  width: 30rem;
+  height: 40rem;
+  background-color: white;
+  color: black;
+  padding: 30px;
+}
+
+.radio-buttons-div {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.active {color: red;}
+
+.form-div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.input-label {
+  font-size: 20px;
+}
+
+.inputs {
+  width: 28.5rem;
+  padding: 5px;
+}
