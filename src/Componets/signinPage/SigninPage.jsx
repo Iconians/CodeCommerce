@@ -33,8 +33,7 @@ class SingninPage extends React.Component {
         active: 'inactive',
         inactive: 'active'
        })
-    }
-    
+    } 
   }
     
   render() {
