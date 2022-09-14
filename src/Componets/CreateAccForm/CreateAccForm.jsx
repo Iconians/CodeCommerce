@@ -26,7 +26,7 @@ class CreateAccForm extends React.Component {
         <form>
           {inputData.length ? inputData.map((item) => (
            <div className="form-div">
-             <label htmlFor={item.name} className='input-label' >{item.label} {item.error}</label>                      
+             <label htmlFor={item.name} className='input-label'>{item.label} {item.error}</label>                      
               <InputBase
               className={item.class} 
               type={item.type}
