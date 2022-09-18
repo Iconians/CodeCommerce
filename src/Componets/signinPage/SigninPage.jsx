@@ -7,13 +7,15 @@ class SingninPage extends React.Component {
   
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = { 
      signIn: false,
      createAcc: true,
      active: 'active',
-     inactive: 'inactive'
+     inactive: 'inactive',
+  
+    } 
     }
-  }
+  
 
   
   switchForm = (e) => {

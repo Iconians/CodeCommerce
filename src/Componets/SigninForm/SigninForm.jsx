@@ -16,14 +16,13 @@ class SigninForm extends React.Component {
       <div> 
         <form>
           {inputData.length ? inputData.map((item) => (
-            <div className="form-div">
-            <label htmlFor={item.name}>{item.label} </label> 
+            <label className="form-label" htmlFor={item.name}>{item.label} 
               <InputBase 
               type={item.type}
               name={item.name}
               className={item.class}
               />            
-            </div>        
+            </label>        
           )): null}
 
           <SubmitButtons />

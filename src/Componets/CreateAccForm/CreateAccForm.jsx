@@ -3,7 +3,37 @@ import InputBase from "../InputBase/InputBsae";
 import SubmitButtons from "../SubmitButtons/SubmitButtons";
 import './CreateAccForm.css'
 
+const INIT_FORM = {
+  email: '',
+  password: '',
+  firstName: '',
+  surName: '',
+  postal: ''
+} 
+
 class CreateAccForm extends React.Component {
+
+  constructor() {
+    super()
+    this.state = {
+     formData: INIT_FORM
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this) 
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+  };
+
+  handleInputChange({target: {name, value}}) {
+    this.setState((prevState) => ({
+      FormData: {
+        ...prevState.FormData,
+        [name]: value
+      }
+    }
+  ))}
   
   render() {
 
@@ -23,17 +53,18 @@ class CreateAccForm extends React.Component {
 
     return(
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           {inputData.length ? inputData.map((item) => (
-           <div className="form-div">
-             <label htmlFor={item.name} className='input-label'>{item.label} {item.error}</label>                      
+           <label htmlFor={item.name} className='form-label'>{item.label} {item.error}                     
               <InputBase
               className={item.class} 
               type={item.type}
-              name={item.name}             
+              name={item.name}
+              onChange={this.handleInputChange}
+              value={this.state[`${item.name}`]}             
               />
               {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
-            </div>
+            </label>
           )): null}
           <SubmitButtons />
         </form>
