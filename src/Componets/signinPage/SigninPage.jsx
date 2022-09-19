@@ -1,7 +1,15 @@
 import React from 'react';
-import SigninForm from '../SigninForm/SigninForm';
-import CreateAccForm from '../CreateAccForm/CreateAccForm';
+import InputBase from '../InputBase/InputBsae';
 import './SigninPage.css'
+
+const INIT_FORM = {
+  email: '',
+  password: '',
+  confirmPassword: '',
+  firstName: '',
+  surName: '',
+  postal: ''
+};
 
 class SingninPage extends React.Component {
   
@@ -12,11 +20,9 @@ class SingninPage extends React.Component {
      createAcc: true,
      active: 'active',
      inactive: 'inactive',
-  
+     formData: INIT_FORM
     } 
-    }
-  
-
+  };
   
   switchForm = (e) => {
     const signIn = e.target.value
@@ -36,11 +42,54 @@ class SingninPage extends React.Component {
         inactive: 'active'
        })
     } 
+  };
+
+  handleSubmit(e) {
+    e.preventDefault()
   }
+
+  handleInputChange = ({target: {name, value}}) => {
+    this.setState((prevState) => ({
+      formData: {
+        ...prevState.formData,
+        [name]: value
+      }
+    }));
+  };
     
   render() {
+
+    const inputData = [
+      {label: 'Your Email Address *', class: 'email-input inputs', type: 'email', name: 'email', },
+      {label: 'Create Password *', 
+       label2: 'Password must be 8-20 characters, including at least one capital letter, at one small letter, one number and one special character -!@#$%^&*()_+',
+       class: 'password-input-1 inputs', 
+       type: 'password', 
+       name: 'password' 
+      },
+      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', },
+      {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', },
+      {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName',  },
+      {label: 'Postcode', class: 'postcode-input inputs', type: 'number', name: 'postal', },
+    ]; 
+
+    const signIninputData = [
+      {label: 'Your Email Address *', name: 'email', type: 'text', class: 'inputs'},
+      {label: 'Enter Your Password *', name: 'password', type: 'password', class: 'inputs'},
+    ];
+
+    const createAccFormButtons = [
+      {type: 'submit', value: 'SAVE', class: 'btn-inputs save-btn'},
+      {type: 'submit', value: 'SIGN UP WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
+    ];
+
+    const signInFormsButtons = [
+      {type: 'submit', value: 'SIGN IN', class: 'btn-inputs save-btn'},
+      {type: 'submit', value: 'SIGN IN WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
+    ];
      
-    return(
+    return (
+
       <div className="page-header">
         <div className="radio-buttons-div">         
           <label htmlFor="signin" className={this.state.active}>
@@ -51,7 +100,69 @@ class SingninPage extends React.Component {
             CREATE ACCOUNT</label> 
         </div>
         <div id="signinForm" className="signin-form-div">
-          {this.state.signIn ? <SigninForm /> : <CreateAccForm />}        
+          <form onSubmit={this.handleSubmit}>
+            {this.state.signIn ? 
+            signIninputData.map((item) => (
+            <label className="form-label" htmlFor={item.name}>{item.label} 
+              <InputBase 
+              type={item.type}
+              name={item.name}
+              className={item.class}
+              />            
+            </label>
+            )) 
+            : 
+            inputData.map((item) => (
+              <label htmlFor={item.name} className='form-label'>{item.label} {item.error}                     
+                <InputBase
+                className={item.class} 
+                type={item.type}
+                name={item.name}
+                onChange={this.handleInputChange}          
+                />
+                {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
+              </label>          
+            ))} 
+            {this.state.signIn ? signInFormsButtons.map((item) => (
+              <div className='submit-div'>
+                <InputBase 
+                  type={item.type}
+                  value={item.value}
+                  className={item.class}
+                />
+                { item.class === 'btn-inputs save-btn' ?
+                  <div className="strikeDiv">
+                    <span>or</span>
+                  </div>
+                  : null
+                } 
+              </div>
+            ))
+            : 
+            createAccFormButtons.map((item) => (
+              <div className='submit-div'>
+                <InputBase 
+                type={item.type}
+                value={item.value}
+                className={item.class}
+                />
+                { item.class === 'btn-inputs save-btn' ?
+                  <div className="strikeDiv">
+                    <span>or</span>
+                  </div>
+                  : null
+                } 
+              </div>
+            ))}
+            <div className="terms-div">
+              <div className="cancel-div"><a href="/">Cancel</a></div>
+              <div className="terms-privacy-div">
+                <a href="/">Privacy Policy and Cookies</a>
+                <span className="span-pipe">|</span>
+                <a href="/">Terms of Sales and Use</a>
+              </div>
+            </div>
+          </form>
         </div>
       </div>  
     )     
