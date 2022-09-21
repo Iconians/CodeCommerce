@@ -1,5 +1,9 @@
 import React from 'react';
 import InputBase from '../InputBase/InputBsae';
+import { emailValidation, 
+  passwordValidation, 
+  onlyTextValidation, 
+  onlyNumberValidation } from '../validations';
 import './SigninPage.css'
 
 const INIT_FORM = {
@@ -8,7 +12,8 @@ const INIT_FORM = {
   confirmPassword: '',
   firstName: '',
   surName: '',
-  postal: ''
+  postal: '',
+  error: {}
 };
 
 class SingninPage extends React.Component {
@@ -23,6 +28,23 @@ class SingninPage extends React.Component {
      formData: INIT_FORM
     } 
   };
+
+  handleValidations = (name , value) => {
+    let errortext;
+    switch(name) {
+      case 'email':
+        errortext = emailValidation(value);
+        this.setState((prevState) => ({error: { ...prevState.error, email: errortext}}));
+        break;
+      case 'password':
+        errortext = passwordValidation(value);
+        this.setState((prevState) => ({...prevState.error, passwordError: errortext}));
+        break;
+      //continue error handling function  
+      default:
+      break 
+    }
+  }
   
   switchForm = (e) => {
     const signIn = e.target.value
@@ -60,22 +82,22 @@ class SingninPage extends React.Component {
   render() {
 
     const inputData = [
-      {label: 'Your Email Address *', class: 'email-input inputs', type: 'email', name: 'email', },
+      {label: 'Your Email Address *', class: 'email-input inputs', type: 'text', name: 'email', },
       {label: 'Create Password *', 
        label2: 'Password must be 8-20 characters, including at least one capital letter, at one small letter, one number and one special character -!@#$%^&*()_+',
        class: 'password-input-1 inputs', 
        type: 'password', 
        name: 'password' 
       },
-      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', },
+      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'text', name: 'confirmPassword', },
       {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', },
       {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName',  },
-      {label: 'Postcode', class: 'postcode-input inputs', type: 'number', name: 'postal', },
+      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', },
     ]; 
 
     const signIninputData = [
       {label: 'Your Email Address *', name: 'email', type: 'text', class: 'inputs'},
-      {label: 'Enter Your Password *', name: 'password', type: 'password', class: 'inputs'},
+      {label: 'Enter Your Password *', name: 'password', type: 'text', class: 'inputs'},
     ];
 
     const createAccFormButtons = [
