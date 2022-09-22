@@ -3,7 +3,10 @@ import InputBase from '../InputBase/InputBsae';
 import { emailValidation, 
   passwordValidation, 
   onlyTextValidation, 
-  onlyNumberValidation } from '../validations';
+  onlyNumberValidation 
+} from '../validations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 import './SigninPage.css'
 
 const INIT_FORM = {
@@ -13,7 +16,6 @@ const INIT_FORM = {
   firstName: '',
   surName: '',
   postal: '',
-  error: {}
 };
 
 class SingninPage extends React.Component {
@@ -25,9 +27,23 @@ class SingninPage extends React.Component {
      createAcc: true,
      active: 'active',
      inactive: 'inactive',
-     formData: INIT_FORM
+     formData: INIT_FORM,
+     error: {}
     } 
   };
+
+  confirmPasswordValidation = (value) => {
+    const password = this.state.formData.password
+    if (value) {
+      if (value === `${password}`) {
+        return '';
+      }else {
+         return 'passwords don\'t match'
+      }
+    } else {
+      return undefined
+    } 
+  } 
 
   handleValidations = (name , value) => {
     let errortext;
@@ -38,11 +54,38 @@ class SingninPage extends React.Component {
         break;
       case 'password':
         errortext = passwordValidation(value);
-        this.setState((prevState) => ({...prevState.error, passwordError: errortext}));
+        this.setState((prevState) => ({ error: {...prevState.error, passwordError: errortext}}));
         break;
-      //continue error handling function  
+      case 'confirmPassword':
+        errortext = this.confirmPasswordValidation(value);
+        this.setState((prevState) => ({error: {...prevState.error, ConfirmPasswordError: errortext}}));
+        break
+      case 'firstName':
+        errortext = onlyTextValidation(value);
+        this.setState((prevState) => ({error: {...prevState.error, firstNameError: errortext}}));
+        break
+      case 'surName':
+        errortext = onlyTextValidation(value);
+        this.setState((prevState) => ({error: {...prevState.error, surNameError: errortext}}));
+        break
+      case 'postal':
+        errortext = onlyNumberValidation(value)
+        this.setState((prevState) => ({error: {...prevState.error, postalError: errortext}}));
+        break  
       default:
       break 
+    }
+  }
+
+  handleBlur = ({ target: { name, value }}) => this.handleValidations(name, value);
+
+  handleEye = () => {
+    const input = document.getElementById('password-eye')
+    if (input.type === 'password') {
+      input.type = 'text'
+    }
+    else {
+      input.type = 'password'
     }
   }
   
@@ -87,9 +130,10 @@ class SingninPage extends React.Component {
        label2: 'Password must be 8-20 characters, including at least one capital letter, at one small letter, one number and one special character -!@#$%^&*()_+',
        class: 'password-input-1 inputs', 
        type: 'password', 
-       name: 'password' 
+       name: 'password',
+       id: 'password-eye' 
       },
-      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'text', name: 'confirmPassword', },
+      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', },
       {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', },
       {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName',  },
       {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', },
@@ -125,23 +169,27 @@ class SingninPage extends React.Component {
           <form onSubmit={this.handleSubmit}>
             {this.state.signIn ? 
             signIninputData.map((item) => (
-            <label className="form-label" htmlFor={item.name}>{item.label} 
+              <label className="form-label" htmlFor={item.name}>{item.label} 
               <InputBase 
               type={item.type}
               name={item.name}
               className={item.class}
-              />            
-            </label>
+              />
+              {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" /> : null}              
+              </label>
             )) 
             : 
             inputData.map((item) => (
-              <label htmlFor={item.name} className='form-label'>{item.label} {item.error}                     
+              <label htmlFor={item.name} className='form-label'>{item.label} {item.error}                
                 <InputBase
                 className={item.class} 
                 type={item.type}
                 name={item.name}
-                onChange={this.handleInputChange}          
+                onBlur={this.handleBlur}
+                onChange={this.handleInputChange}
+                id={item.id}
                 />
+                {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye}/> : null}     
                 {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
               </label>          
             ))} 

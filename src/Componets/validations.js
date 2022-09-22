@@ -36,13 +36,13 @@ export const onlyTextValidation = (value) => {
 
 export const onlyNumberValidation = (value) => {
   if (value) {
-    if (/\D/g.test(value)) {
+    if (/^[0-9]*$/.test(value)) {
       return '';
     }else {
       return 'Numbers Only'
     }
   }
   else {
-    return 'Numbers Only'
+    return undefined
   }
 };
