@@ -50,7 +50,7 @@ class SingninPage extends React.Component {
     switch(name) {
       case 'email':
         errortext = emailValidation(value);
-        this.setState((prevState) => ({error: { ...prevState.error, email: errortext}}));
+        this.setState((prevState) => ({error: { ...prevState.error, emailError: errortext}}));
         break;
       case 'password':
         errortext = passwordValidation(value);
@@ -58,7 +58,7 @@ class SingninPage extends React.Component {
         break;
       case 'confirmPassword':
         errortext = this.confirmPasswordValidation(value);
-        this.setState((prevState) => ({error: {...prevState.error, ConfirmPasswordError: errortext}}));
+        this.setState((prevState) => ({error: {...prevState.error, confirmPasswordError: errortext}}));
         break
       case 'firstName':
         errortext = onlyTextValidation(value);
@@ -125,62 +125,88 @@ class SingninPage extends React.Component {
   render() {
 
     const inputData = [
-      {label: 'Your Email Address *', class: 'email-input inputs', type: 'text', name: 'email', },
+      {label: 'Your Email Address *', class: 'email-input inputs', type: 'text', name: 'email', error: 'emailError' },
       {label: 'Create Password *', 
        label2: 'Password must be 8-20 characters, including at least one capital letter, at one small letter, one number and one special character -!@#$%^&*()_+',
        class: 'password-input-1 inputs', 
        type: 'password', 
        name: 'password',
-       id: 'password-eye' 
+       id: 'password-eye',
+       error: 'passwordError' 
       },
-      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', },
-      {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', },
-      {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName',  },
-      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', },
+      {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', error: 'confirmPasswordError' },
+      {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', error: 'firstNameError' },
+      {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName', error: 'surNameError' },
+      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', error: 'postalError'},
     ]; 
 
     const signIninputData = [
-      {label: 'Your Email Address *', name: 'email', type: 'text', class: 'inputs'},
-      {label: 'Enter Your Password *', name: 'password', type: 'text', class: 'inputs'},
+      {label: 'Your Email Address *', name: 'email', type: 'text', class: 'inputs', error: 'emailError'},
+      {label: 'Enter Your Password *', name: 'password', type: 'password', class: 'inputs', id: 'password-eye', error: 'passwordError'},
     ];
 
     const createAccFormButtons = [
       {type: 'submit', value: 'SAVE', class: 'btn-inputs save-btn'},
-      {type: 'submit', value: 'SIGN UP WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
+      {type: 'button', value: 'SIGN UP WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
     ];
 
     const signInFormsButtons = [
       {type: 'submit', value: 'SIGN IN', class: 'btn-inputs save-btn'},
-      {type: 'submit', value: 'SIGN IN WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
+      {type: 'button', value: 'SIGN IN WITH FACEBOOK', class: 'btn-inputs facebook-btn'}
     ];
      
     return (
 
       <div className="page-header">
         <div className="radio-buttons-div">         
-          <label htmlFor="signin" className={this.state.active}>
+          <label htmlFor="signin" className={this.state.inactive}>
           <input onChange={this.switchForm} value="true" checked={this.state.signIn === true && this.state.createAcc === false} type="radio" name="formChoice" id="signIn" /> 
-            SIGN IN</label>          
-          <label htmlFor="create-account" className={this.state.inactive}>
+            SIGN IN
+          </label>          
+          <label htmlFor="create-account" className={this.state.active}>
           <input onChange={this.switchForm} value="false" checked={this.state.createAcc === true && this.state.signIn === false} type="radio" name="formChoice" id="createAccount" /> 
-            CREATE ACCOUNT</label> 
+            CREATE ACCOUNT
+          </label> 
         </div>
         <div id="signinForm" className="signin-form-div">
           <form onSubmit={this.handleSubmit}>
             {this.state.signIn ? 
             signIninputData.map((item) => (
-              <label className="form-label" htmlFor={item.name}>{item.label} 
+              <label className="form-label" htmlFor={item.name}>
+              <div className='grid-div'>
+                {item.label}
+                {
+                  (this.state.error
+                    && this.state.error[item.error]
+                    && this.state.error[item.error].length > 1)
+                  ? <div className='error'>{this.state.error[item.error]}</div> 
+                  : null 
+                } 
+              </div>   
               <InputBase 
               type={item.type}
               name={item.name}
+              onBlur={this.handleBlur}
+              onChange={this.handleInputChange}
               className={item.class}
+              id={item.id}
               />
-              {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" /> : null}              
+              {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}              
               </label>
             )) 
             : 
             inputData.map((item) => (
-              <label htmlFor={item.name} className='form-label'>{item.label} {item.error}                
+              <label htmlFor={item.name} className='form-label'> 
+              <div className='grid-div'>
+                {item.label}
+                {
+                  (this.state.error
+                    && this.state.error[item.error]
+                    && this.state.error[item.error].length > 1)
+                  ? <div className='error'>{this.state.error[item.error]}</div> 
+                  : null 
+                } 
+              </div>         
                 <InputBase
                 className={item.class} 
                 type={item.type}
@@ -189,7 +215,7 @@ class SingninPage extends React.Component {
                 onChange={this.handleInputChange}
                 id={item.id}
                 />
-                {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye}/> : null}     
+                {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}     
                 {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
               </label>          
             ))} 

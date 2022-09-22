@@ -14,11 +14,23 @@
 .active {color: red;}
 
 .form-label {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 10px;
   font-size: 20px;
+}
+
+.grid-div {
+  display: flex;
+  width: 98%;
+}
+
+.error {
+  margin-left: auto;
+  color: red;
+  font-size: 14px;
 }
 
 .input-label {
@@ -28,6 +40,13 @@
 .inputs {
   width: 28.5rem;
   padding: 5px;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 32px;
+  right: 15px;
+  color: gray;
 }
 
 .para-tag {
