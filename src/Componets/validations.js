@@ -13,7 +13,7 @@ export const emailValidation = (value) => {
 
 export const passwordValidation = (value) => {
   if (value) {
-    if (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(value)) {
+    if (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(value) && value.length <= 20) {
       return '';
     }else {
       return 'Invalid password'

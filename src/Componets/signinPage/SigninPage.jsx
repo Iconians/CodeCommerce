@@ -28,9 +28,12 @@ class SingninPage extends React.Component {
      active: 'active',
      inactive: 'inactive',
      formData: INIT_FORM,
-     error: {}
+     error: {},
+     accounts: {}
     } 
   };
+
+ 
 
   confirmPasswordValidation = (value) => {
     const password = this.state.formData.password
@@ -109,8 +112,40 @@ class SingninPage extends React.Component {
     } 
   };
 
+  checkErrorBeforeSave = () => {
+    console.log('hello');
+    const { formData, error } = this.state
+    let errorValue = {};
+    let isError = false;
+   Object.keys(formData).forEach((val) => {
+    console.log(error)
+    if (!formData[val].length){
+      errorValue = { ...errorValue, [`${val}Error`]: 'Required'};
+      isError = true;
+    }
+    else {
+      isError = false
+    }
+   });
+   Object.keys(error).forEach((val) => {
+    if (error[val].length) {
+      errorValue = { ...errorValue, [`${val}Error`]: 'Required'};
+      isError = true;
+    }
+   })
+   this.setState({ error: errorValue });
+   console.log(isError)
+   return isError
+  }
+
   handleSubmit(e) {
     e.preventDefault()
+    const checkErrors = this.checkErrorBeforeSave();
+    if (!checkErrors) {
+      this.setState({
+        formData: INIT_FORM,
+      })    
+    }
   }
 
   handleInputChange = ({target: {name, value}}) => {
@@ -132,7 +167,7 @@ class SingninPage extends React.Component {
        type: 'password', 
        name: 'password',
        id: 'password-eye',
-       error: 'passwordError' 
+       error: 'passwordError',
       },
       {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', error: 'confirmPasswordError' },
       {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', error: 'firstNameError' },
@@ -171,53 +206,55 @@ class SingninPage extends React.Component {
         <div id="signinForm" className="signin-form-div">
           <form onSubmit={this.handleSubmit}>
             {this.state.signIn ? 
-            signIninputData.map((item) => (
-              <label className="form-label" htmlFor={item.name}>
-              <div className='grid-div'>
-                {item.label}
-                {
-                  (this.state.error
-                    && this.state.error[item.error]
-                    && this.state.error[item.error].length > 1)
-                  ? <div className='error'>{this.state.error[item.error]}</div> 
-                  : null 
-                } 
-              </div>   
-              <InputBase 
-              type={item.type}
-              name={item.name}
-              onBlur={this.handleBlur}
-              onChange={this.handleInputChange}
-              className={item.class}
-              id={item.id}
-              />
-              {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}              
-              </label>
-            )) 
-            : 
-            inputData.map((item) => (
-              <label htmlFor={item.name} className='form-label'> 
-              <div className='grid-div'>
-                {item.label}
-                {
-                  (this.state.error
-                    && this.state.error[item.error]
-                    && this.state.error[item.error].length > 1)
-                  ? <div className='error'>{this.state.error[item.error]}</div> 
-                  : null 
-                } 
-              </div>         
-                <InputBase
-                className={item.class} 
+              signIninputData.map((item) => (
+                <label className="form-label" htmlFor={item.name}>
+                <div className='grid-div'>
+                  {item.label}
+                  {
+                    (this.state.error
+                      && this.state.error[item.error]
+                      && this.state.error[item.error].length > 1)
+                    ? <div className='error'>{this.state.error[item.error]}</div> 
+                    : null 
+                  } 
+                </div>   
+                <InputBase 
                 type={item.type}
                 name={item.name}
                 onBlur={this.handleBlur}
                 onChange={this.handleInputChange}
+                className={item.class}
                 id={item.id}
+                autoComplete='off'
                 />
-                {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}     
-                {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
-              </label>          
+                {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}              
+                </label>
+              )) 
+              : 
+              inputData.map((item) => (
+                <label htmlFor={item.name} className='form-label'> 
+                <div className='grid-div'>
+                  {item.label}
+                  {
+                    (this.state.error
+                      && this.state.error[item.error]
+                      && this.state.error[item.error].length > 1)
+                    ? <div className='error'>{this.state.error[item.error]}</div> 
+                    : null 
+                  } 
+                </div>         
+                  <InputBase
+                  className={item.class} 
+                  type={item.type}
+                  name={item.name}
+                  onBlur={this.handleBlur}
+                  onChange={this.handleInputChange}
+                  id={item.id}
+                  autoComplete='off'
+                  />
+                  {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}     
+                  {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
+                </label>          
             ))} 
             {this.state.signIn ? signInFormsButtons.map((item) => (
               <div className='submit-div'>
@@ -233,22 +270,22 @@ class SingninPage extends React.Component {
                   : null
                 } 
               </div>
-            ))
-            : 
-            createAccFormButtons.map((item) => (
-              <div className='submit-div'>
-                <InputBase 
-                type={item.type}
-                value={item.value}
-                className={item.class}
-                />
-                { item.class === 'btn-inputs save-btn' ?
-                  <div className="strikeDiv">
-                    <span>or</span>
-                  </div>
-                  : null
-                } 
-              </div>
+              ))
+              : 
+              createAccFormButtons.map((item) => (
+                <div className='submit-div'>
+                  <InputBase 
+                  type={item.type}
+                  value={item.value}
+                  className={item.class}
+                  />
+                  { item.class === 'btn-inputs save-btn' ?
+                    <div className="strikeDiv">
+                      <span>or</span>
+                    </div>
+                    : null
+                  } 
+                </div>
             ))}
             <div className="terms-div">
               <div className="cancel-div"><a href="/">Cancel</a></div>
