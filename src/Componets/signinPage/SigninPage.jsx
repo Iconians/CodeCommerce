@@ -138,7 +138,7 @@ class SingninPage extends React.Component {
    return isError
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     const checkErrors = this.checkErrorBeforeSave();
     if (!checkErrors) {
