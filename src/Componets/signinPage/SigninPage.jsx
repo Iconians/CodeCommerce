@@ -20,8 +20,8 @@ const INIT_FORM = {
 
 class SingninPage extends React.Component {
   
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = { 
      signIn: false,
      createAcc: true,
@@ -113,18 +113,13 @@ class SingninPage extends React.Component {
   };
 
   checkErrorBeforeSave = () => {
-    console.log('hello');
-    const { formData, error } = this.state
+    const { formData, error, accounts } = this.state
     let errorValue = {};
     let isError = false;
    Object.keys(formData).forEach((val) => {
-    console.log(error)
     if (!formData[val].length){
       errorValue = { ...errorValue, [`${val}Error`]: 'Required'};
       isError = true;
-    }
-    else {
-      isError = false
     }
    });
    Object.keys(error).forEach((val) => {
@@ -133,19 +128,39 @@ class SingninPage extends React.Component {
       isError = true;
     }
    })
+   console.log(formData.email)
+   console.log(accounts.email)
+   if (formData.email === accounts.email) { 
+    errorValue = { ...errorValue, emailError: 'There is already an account with this email'}
+    isError = true;
+    console.log(isError)
+   }
+   else {
+    console.log('this is working but broke');
+   } 
+   
    this.setState({ error: errorValue });
    console.log(isError)
+
    return isError
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
+    const {formData} =this.state
     const checkErrors = this.checkErrorBeforeSave();
     if (!checkErrors) {
-      this.setState({
+      this.setState((prevState) => ({
+        accounts: {...prevState.accounts, [`${formData.firstName}account`]: formData},
         formData: INIT_FORM,
-      })    
+      }))
+      alert('Thank you for creating an account please sign in')
     }
+   
+  }
+
+  handleSignIn = (e) => {
+    e.preventDefault()
   }
 
   handleInputChange = ({target: {name, value}}) => {
@@ -221,6 +236,7 @@ class SingninPage extends React.Component {
                 <InputBase 
                 type={item.type}
                 name={item.name}
+                value={this.state.formData && this.state.formData[item.name]}
                 onBlur={this.handleBlur}
                 onChange={this.handleInputChange}
                 className={item.class}
@@ -247,6 +263,7 @@ class SingninPage extends React.Component {
                   className={item.class} 
                   type={item.type}
                   name={item.name}
+                  value={this.state.formData && this.state.formData[item.name]}
                   onBlur={this.handleBlur}
                   onChange={this.handleInputChange}
                   id={item.id}
