@@ -116,6 +116,8 @@ class SingninPage extends React.Component {
     const { formData, error, accounts } = this.state
     let errorValue = {};
     let isError = false;
+    let data = accounts
+    let keys = Object.keys(data)
    Object.keys(formData).forEach((val) => {
     if (!formData[val].length){
       errorValue = { ...errorValue, [`${val}Error`]: 'Required'};
@@ -129,15 +131,25 @@ class SingninPage extends React.Component {
     }
    })
    console.log(formData.email)
-   console.log(accounts.email)
-   if (formData.email === accounts.email) { 
-    errorValue = { ...errorValue, emailError: 'There is already an account with this email'}
-    isError = true;
-    console.log(isError)
-   }
-   else {
-    console.log('this is working but broke');
-   } 
+   console.log(accounts)
+   keys.forEach((key) => {
+    let values = accounts[key]
+    console.log(values.email)
+    if (formData.email === values.email) { 
+      errorValue = { ...errorValue, emailError: 'There is already an account with this email'}
+      isError = true;
+      console.log(isError)
+    }
+   })
+
+  //  if (formData.email === values.email) { 
+  //   errorValue = { ...errorValue, emailError: 'There is already an account with this email'}
+  //   isError = true;
+  //   console.log(isError)
+  //  }
+  //  else {
+  //   console.log('this is working but broke');
+  //  } 
    
    this.setState({ error: errorValue });
    console.log(isError)
