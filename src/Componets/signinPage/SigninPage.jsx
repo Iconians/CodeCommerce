@@ -18,6 +18,11 @@ const INIT_FORM = {
   postal: '',
 };
 
+const SIGN_IN_FORM = {
+  email: '',
+  password: ''
+}
+
 class SingninPage extends React.Component {
   
   constructor() {
@@ -28,6 +33,7 @@ class SingninPage extends React.Component {
      active: 'active',
      inactive: 'inactive',
      formData: INIT_FORM,
+     signInForm: SIGN_IN_FORM,
      error: {},
      accounts: {}
     } 
@@ -141,16 +147,6 @@ class SingninPage extends React.Component {
       console.log(isError)
     }
    })
-
-  //  if (formData.email === values.email) { 
-  //   errorValue = { ...errorValue, emailError: 'There is already an account with this email'}
-  //   isError = true;
-  //   console.log(isError)
-  //  }
-  //  else {
-  //   console.log('this is working but broke');
-  //  } 
-   
    this.setState({ error: errorValue });
    console.log(isError)
 
@@ -168,14 +164,56 @@ class SingninPage extends React.Component {
       }))
       alert('Thank you for creating an account please sign in')
     }
-   
+  }
+
+  checkErrorsBeforeSignIn = () => {
+    const { signInForm, accounts } = this.state
+    let errorValue = {};
+    let isError = false;
+    let data = accounts
+    let keys = Object.keys(data)
+    console.log(keys)
+    if (keys.length) {
+      keys.forEach((key) => {
+        let values = accounts[key]
+        console.log(values.email)
+        console.log(values.password)
+        if (signInForm.email === values.email && signInForm.password === values.password) { 
+          console.log('it checks out')
+        }
+        else{
+          errorValue = { ...errorValue, emailError: 'No account with this email'}
+          isError = true;
+          console.log(isError)
+        }
+      })   
+    }
+    else {
+      errorValue = { ...errorValue, emailError: 'No account with this email'}
+      isError = true;
+    }
+    this.setState({ error: errorValue });
+    console.log(isError)    
+    return isError
   }
 
   handleSignIn = (e) => {
     e.preventDefault()
+    const checkErrors = this.checkErrorsBeforeSignIn()
+    if (!checkErrors) {
+      alert('it works')
+    }
   }
 
   handleInputChange = ({target: {name, value}}) => {
+    this.state.signIn ? 
+    this.setState((prevState) => ({
+      signInForm: {
+        ...prevState.signInForm,
+        [name]: value
+      }
+    }))
+    :
     this.setState((prevState) => ({
       formData: {
         ...prevState.formData,
@@ -231,7 +269,7 @@ class SingninPage extends React.Component {
           </label> 
         </div>
         <div id="signinForm" className="signin-form-div">
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.state.signIn ? this.handleSignIn : this.handleSubmit }>
             {this.state.signIn ? 
               signIninputData.map((item) => (
                 <label className="form-label" htmlFor={item.name}>
@@ -248,7 +286,7 @@ class SingninPage extends React.Component {
                 <InputBase 
                 type={item.type}
                 name={item.name}
-                value={this.state.formData && this.state.formData[item.name]}
+                value={this.state.signInForm && this.state.signInForm[item.name]}
                 onBlur={this.handleBlur}
                 onChange={this.handleInputChange}
                 className={item.class}
