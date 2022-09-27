@@ -38,7 +38,7 @@ class SingninPage extends React.Component {
      accounts: {}
     } 
   };
-
+ 
  
 
   confirmPasswordValidation = (value) => {
@@ -202,9 +202,10 @@ class SingninPage extends React.Component {
     const checkErrors = this.checkErrorsBeforeSignIn()
     if (!checkErrors) {
       alert('it works')
+      this.props.next(1)
     }
   }
-
+  
   handleInputChange = ({target: {name, value}}) => {
     this.state.signIn ? 
     this.setState((prevState) => ({
@@ -237,7 +238,7 @@ class SingninPage extends React.Component {
       {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', error: 'confirmPasswordError' },
       {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', error: 'firstNameError' },
       {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName', error: 'surNameError' },
-      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', error: 'postalError'},
+      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', error: 'postalError', length: 5},
     ]; 
 
     const signIninputData = [
@@ -259,11 +260,11 @@ class SingninPage extends React.Component {
 
       <div className="page-header">
         <div className="radio-buttons-div">         
-          <label htmlFor="signin" className={this.state.inactive}>
+          <label htmlFor="signin" className={this.state.active}>
           <input onChange={this.switchForm} value="true" checked={this.state.signIn === true && this.state.createAcc === false} type="radio" name="formChoice" id="signIn" /> 
             SIGN IN
           </label>          
-          <label htmlFor="create-account" className={this.state.active}>
+          <label htmlFor="create-account" className={this.state.inactive}>
           <input onChange={this.switchForm} value="false" checked={this.state.createAcc === true && this.state.signIn === false} type="radio" name="formChoice" id="createAccount" /> 
             CREATE ACCOUNT
           </label> 
@@ -318,6 +319,7 @@ class SingninPage extends React.Component {
                   onChange={this.handleInputChange}
                   id={item.id}
                   autoComplete='off'
+                  length={item.length}
                   />
                   {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}     
                   {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
