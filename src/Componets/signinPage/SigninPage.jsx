@@ -238,7 +238,7 @@ class SingninPage extends React.Component {
       {label: 'Confirm Password *', class: 'password-input-2 inputs', type: 'password', name: 'confirmPassword', error: 'confirmPasswordError' },
       {label: 'First Name *', class: 'first-name-input inputs', type: 'text', name: 'firstName', error: 'firstNameError' },
       {label: 'Surname *', class: 'surname-input inputs', type: 'text', name: 'surName', error: 'surNameError' },
-      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', error: 'postalError', length: 5},
+      {label: 'Postcode', class: 'postcode-input inputs', type: 'text', name: 'postal', error: 'postalError'},
     ]; 
 
     const signIninputData = [
@@ -319,7 +319,6 @@ class SingninPage extends React.Component {
                   onChange={this.handleInputChange}
                   id={item.id}
                   autoComplete='off'
-                  length={item.length}
                   />
                   {item.name === 'password' ? <FontAwesomeIcon icon={faEye} className="eye-icon" onClick={this.handleEye} /> : null}     
                   {item.label2 ? <p className="para-tag">{item.label2}</p> : null}
