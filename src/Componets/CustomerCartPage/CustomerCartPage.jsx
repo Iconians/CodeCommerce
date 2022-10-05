@@ -1,4 +1,5 @@
 import React from "react";
+import "./CustomerCartPage.css";
 import ComputerKeyboard from "../ComputerKeyboard/ComputerKeyboard";
 import ComputerMouse from "../ComputerMouse/ComputerMouse";
 import HeadPhones from "../HeadPhones/HeadPhones";
@@ -17,7 +18,7 @@ render() {
   ]
 
   return(
-    <div>
+    <div className="parent-div">
       <div className="message-box">
         {/* ternery to check if there are messages or not */}
       </div>
@@ -33,13 +34,13 @@ render() {
             <div className="cart-items">
               <FontAwesomeIcon  icon={faClose}/>
               {item.componet}
-              <select name="Quantity" id="">
+              <select name="Quantity" id="" className="quantity">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
               </select>
-              <h4>generate total</h4>           
+              <h4 className="total-price">generate total</h4>           
             </div>   
             ))
             :

@@ -1,0 +1,38 @@
+.parent-div {
+  background-color: white;
+  color: black;
+  width: 1200px;
+}
+
+.cart-items-parent-div {width: 800px;}
+
+.headings-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cart-items {
+  display: flex;
+  position: relative;
+}
+
+.main-wrapper {display: flex;}
+
+.item-img {width: 70px;}
+
+.price-wrapper {
+  position: absolute;
+  left: 245px;
+}
+
+.quantity {
+  position: absolute;
+  left: 440px;
+  top: 20px;
+  padding: 10px;
+}
+
+.total-price {
+  position: absolute;
+  right: 28px;
+}

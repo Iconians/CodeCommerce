@@ -6,10 +6,10 @@ const ComputerKeyboard = () => (
 
   <div className="main-wrapper">
     <div className="img-wrapper">
-      <img src={KeyBoard} alt="" />
+      <img src={KeyBoard} alt="" className="item-img"/>
     </div>
     <div className="description-wrapper">
-      <h4>Computer Keyboard</h4>
+      <h4>Keyboard</h4>
     </div>
     <div className="price-wrapper">
       <h3>25.99</h3>

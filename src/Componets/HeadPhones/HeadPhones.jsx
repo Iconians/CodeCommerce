@@ -6,7 +6,7 @@ const HeadPhones = () => (
 
   <div className="main-wrapper">
     <div className="img-wrapper">
-      <img src={Headphones} alt="" />
+      <img src={Headphones} alt="" className="item-img"/>
     </div>
     <div className="description-wrapper">
       <h4>HeadPhones</h4>
