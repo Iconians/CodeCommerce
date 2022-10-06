@@ -39,7 +39,7 @@ render() {
           {cartItems.length ? 
             cartItems.map((item) => (
             <div className="cart-items">
-              <FontAwesomeIcon  icon={faClose}/>
+              <FontAwesomeIcon icon={faClose} className="close"/>
               {item.componet}
               <select name="Quantity" id="" className="quantity">
                 <option value="1">1</option>

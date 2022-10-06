@@ -25,11 +25,11 @@
 
 .total-price-h4{grid-area: total-price-h4;}
 
-.cart-items {
-  grid-area: cart-items;
-  /* display: flex;
-  position: relative; */
-}
+/* .cart-items {
+
+  display: flex;
+  position: relative;
+} */
 
 .main-wrapper {display: flex;}
 
