@@ -13,8 +13,8 @@ render() {
 
   const cartItems = [
     {componet: <ComputerMouse />},
-    {componet: <ComputerKeyboard />},
-    {componet: <HeadPhones />}
+    // {componet: <ComputerKeyboard />},
+    // {componet: <HeadPhones />}
   ]
 
   return(
@@ -22,13 +22,20 @@ render() {
       <div className="message-box">
         {/* ternery to check if there are messages or not */}
       </div>
-      <div className="cart-items-parent-div">
-        <div className="headings-div">
+      <div className="cart-headings-div">
+        <div className="product-h4">
           <h4>Product</h4>
+        </div>
+        <div className="price-h4">
           <h4>price</h4>
+        </div>
+        <div className="quantity-h4">
           <h4>Quantity</h4>
+        </div>
+        <div className="total-price-h4">  
           <h4>Total Price</h4>
-        </div> 
+        </div>
+      </div>   
           {cartItems.length ? 
             cartItems.map((item) => (
             <div className="cart-items">
@@ -49,7 +56,6 @@ render() {
             </div> 
           }
         
-      </div>
       <div className="cart-summary-and-totals">
         <div className="summary-div">
           <h4>SUMMARY</h4>
