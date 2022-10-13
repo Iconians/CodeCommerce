@@ -1,15 +1,16 @@
 import React from "react";
 // import './HeadPhones.css';
 import Headphones from "../assets/headphones-pic.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const HeadPhones = () => (
 
   <div className="main-wrapper">
-    <div className="img-wrapper">
-      <img src={Headphones} alt="" className="item-img"/>
-    </div>
-    <div className="description-wrapper">
-      <h4>HeadPhones</h4>
+    <FontAwesomeIcon icon={faClose} className="close"/>
+    <div className="description">
+    <img src={Headphones} alt="" className="item-img"/>
+    <h4>HeadPhones</h4>
     </div>
     <div className="price-wrapper">
       <h3>36.99</h3>

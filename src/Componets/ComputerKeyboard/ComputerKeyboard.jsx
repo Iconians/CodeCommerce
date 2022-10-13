@@ -1,14 +1,15 @@
 import React from "react";
 // import './ComputerKeyboard.css';
 import KeyBoard from "../assets/keyboard-pic.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const ComputerKeyboard = () => (
 
   <div className="main-wrapper">
-    <div className="img-wrapper">
-      <img src={KeyBoard} alt="" className="item-img"/>
-    </div>
-    <div className="description-wrapper">
+    <FontAwesomeIcon icon={faClose} className="close"/>
+    <div className="description">
+    <img src={KeyBoard} alt="" className="item-img"/>
       <h4>Keyboard</h4>
     </div>
     <div className="price-wrapper">
