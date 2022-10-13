@@ -91,6 +91,7 @@
   width: 50px;
   height: 50px;
   margin-top: 35px;
+  cursor: pointer;
 }
 
 .total-price {
@@ -134,4 +135,31 @@
 .code-input-btn {
   background-color: white;
   font-weight: 900;
+  cursor: pointer;
+}
+
+.cart-subtotal-div,
+.shipping-div,
+.discount-div,
+.cart-total-div
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-headings {margin-left: 5px;}
+
+.price-div {
+  margin-right: 5px;
+  margin-top: 28px;
+}
+
+.submit-btn {
+  padding: 25px 115px;
+  background-color: red;
+  font-weight: bold;
+  color: black;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
 }

@@ -72,24 +72,33 @@ render() {
         <hr />
         <div className="totals-div">
           <div className="cart-subtotal-div">
-            <p>Cart Subtotal:</p>
-          </div>  
-          <div className="subtotal-price-div">
-            -
+            <div className="total-headings">
+              <p>Cart Subtotal:</p>
+            </div>
+            <div className="subtotal-price-div price-div">
+            00.00
             {/* output of function to add cart total */}
           </div>
-          <div className="shaipping-div">
-            <p>Shipping & handling:</p>
-            <div>-</div>
+          </div>  
+        
+          <div className="shipping-div">
+            <div className="total-headings">
+              <p>Shipping & handling:</p>
+            </div>
+            <div className="price-div">00.00</div>
           </div>
           <div className="discount-div">
-            <p>Discounts:</p>
-            <div>-</div>
+            <div className="total-headings">
+              <p>Discounts:</p>
+            </div>
+            <div className="price-div">00.00</div>
           </div>
           <div className="cart-total-div">
-            <h5>Cart Total:</h5>
-            <div>
-              -
+            <div className="total-headings">
+              <h5>Cart Total:</h5>
+            </div>
+            <div className="price-div">
+              00.00
               {/* output of function to add cart total */}
             </div>
           </div>
@@ -97,6 +106,7 @@ render() {
         <hr />
         <div>
           <InputBase 
+            className="submit-btn"
             type="submit"
             value="CHECKOUT" 
           />
