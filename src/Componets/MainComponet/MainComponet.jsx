@@ -8,7 +8,7 @@ class MainComponet extends React.Component {
   constructor() {
     super()
     this.state = {
-      index: 0
+      index: 1
     }
   }
 

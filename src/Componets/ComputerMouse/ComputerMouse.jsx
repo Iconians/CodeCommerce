@@ -6,16 +6,16 @@ import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const ComputerMouse = () => (
 
-  <div className="main-wrapper">
-    <FontAwesomeIcon icon={faClose} className="close"/>
-    <div className="description">
-    <img src={MousePic} alt="" className="item-img" />
-    <h4>Mouse</h4>
-    </div>
-    <div className="price-wrapper">
-      <h3>55.99</h3>
-    </div>
-  </div>
+      <div className="main-wrapper">
+        <FontAwesomeIcon icon={faClose} className="close"/>
+        <div className="description">
+        <img src={MousePic} alt="" className="item-img" />
+        <h4>Mouse</h4>
+        </div>
+        <div className="price-wrapper">
+          <h3>55.99</h3>
+        </div>
+      </div>
 )
 
 export default ComputerMouse;
