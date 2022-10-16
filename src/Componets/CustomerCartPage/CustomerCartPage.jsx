@@ -12,74 +12,74 @@ class CustomerCartPage extends React.Component {
     super(props)
     this.state = {
       prices: [],
-      quantity: [
-        {name: 'mouse', value: 1, id: 1},
-        {name: 'keyboard', value: 1, id: 2},
-        {name: 'headphones', value: 1, id: 3}
-      ]
+      // quantity: [
+      //   {name: 'mouse', value: 1, id: 1},
+      //   {name: 'keyboard', value: 1, id: 2},
+      //   {name: 'headphones', value: 1, id: 3}
+      // ]
     }
   }
-  
-    collectPrice = (name, price, id) => {
-      this.setState((prevState) => ({
-        prices: [...prevState.prices, { name: name, price: price, id: id } ]
-      }))
+
+    collectPrice = (name, price, id, quantity) => {
+      setTimeout(() => {
+        this.setState((prevState) => ({  
+          prices: [...prevState.prices, { name: name, price: price, id: id, quantity: quantity } ]
+        }))
+      }, 1000);  
     } 
   
     
   
 
   // collectQuantity = (e) => {
-  //  const { quantity } = this.state
   //  const name = e.target.name;
+  //  console.log(name)
   //  const id = e.target.id;
   //  const value = e.target.value
-  //  let setValue = quantity.map((item) => (
-  //   {...item, name: name, value: value, id: id}
-  //  ))
-  //  console.log(name)
-  //  this.setState({
-  //   quantity: [ setValue ]
-  //  })
+   
+  //  setTimeout(() => {
+  //    this.setState((prevState) => ({
+  //     quantity: [...prevState.quantity, { name: name, value: value, id: id} ]
+  //    }))
+  //   }, 1000);
   // }
 
   updateQuantity = (e) => {
-    const { quantity } = this.state
+    const { prices } = this.state
     const name = e.target.name;
     const value = e.target.value;
-    let setValue = quantity.map((item) => {
+    let setValue = prices.map((item) => {
       if (name === item.name) {
-        return {...item, value: value}
+        return {...item, quantity: parseInt(value)}
       }
       return item
     })
     this.setState({
-      quantity:  setValue 
+      prices:  setValue 
     })
-    this.totalProductPrice()
   }
 
   // totalProductPrice = () => {
   //   const { prices, quantity } = this.state
-  //   const priceArry = []
-  //   const quantityArr = []
-  //   let price = Math.max(prices.price)
-  //   let qty = Math.max(quantity.value)
-
-  //   console.log(priceArry, quantityArr)
-  //   if (prices.id === quantity.id) {
-  //     return ( Math.max(price * qty).toFixed(2) ) 
+  
+  //   setTimeout(() => {
+  //   let price = Math.max()
+  //   let qty = Math.max()
+  //   if ( === ) {
+  //     console.log(( Math.max(price * qty).toFixed(2) )) 
   //   }
+  //   }, 1000);
   // }
-
+  
+  
   cartItems = [
     {componet: <ComputerMouse price={this.collectPrice} />, name: 'mouse', id: 1},
     {componet: <ComputerKeyboard price={this.collectPrice} />, name: 'keyboard', id: 2},
     {componet: <HeadPhones price={this.collectPrice} />, name: 'headphones', id: 3}
   ]
-  
+
   render() {
-  
+   
 
     return(
       <div className="parent-div">
@@ -113,7 +113,7 @@ class CustomerCartPage extends React.Component {
                     <option value='3'>3</option>
                     <option value='4'>4</option>
                   </select>
-                  <h4 className="total-price">{this.totalProductPrice}</h4> 
+                  <h4 className="total-price">{}</h4> 
                   <hr className="hr"/>          
                 </div> 
                 ))

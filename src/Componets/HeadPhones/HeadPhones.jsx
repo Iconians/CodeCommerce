@@ -13,7 +13,7 @@ const HeadPhones = ({price}) => (
     <h4>HeadPhones</h4>
     </div>
     <div className="price-wrapper">
-      <h3 onLoad={price('headphones', 36.99, 3)}>36.99</h3>
+      <h3 onLoad={price('headphones', 36.99, 3, 1)}>36.99</h3>
     </div>
   </div>
 )

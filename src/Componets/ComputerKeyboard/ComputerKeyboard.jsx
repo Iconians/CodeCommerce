@@ -13,7 +13,7 @@ const ComputerKeyboard = ({price}) => (
       <h4>Keyboard</h4>
     </div>
     <div className="price-wrapper">
-      <h3 onLoad={price('keyboard',25.99, 2)}>25.99</h3>
+      <h3 onLoad={price('keyboard',25.99, 2, 1)}>25.99</h3>
     </div>
   </div>
 )

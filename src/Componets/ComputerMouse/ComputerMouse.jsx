@@ -6,7 +6,8 @@ import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const ComputerMouse = ({price}) => { 
 
-  price('mouse',25.99, 1)
+    price('mouse',25.99, 1, 1)
+ 
     
   
 
