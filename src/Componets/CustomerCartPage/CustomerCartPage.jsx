@@ -8,23 +8,79 @@ import InputBase from "../InputBase/InputBsae";
 
 class CustomerCartPage extends React.Component {
   
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-    
+      prices: [],
+      quantity: [
+        {name: 'mouse', value: 1, id: 1},
+        {name: 'keyboard', value: 1, id: 2},
+        {name: 'headphones', value: 1, id: 3}
+      ]
     }
-  }  
+  }
   
+    collectPrice = (name, price, id) => {
+      this.setState((prevState) => ({
+        prices: [...prevState.prices, { name: name, price: price, id: id } ]
+      }))
+    } 
   
+    
+  
+
+  // collectQuantity = (e) => {
+  //  const { quantity } = this.state
+  //  const name = e.target.name;
+  //  const id = e.target.id;
+  //  const value = e.target.value
+  //  let setValue = quantity.map((item) => (
+  //   {...item, name: name, value: value, id: id}
+  //  ))
+  //  console.log(name)
+  //  this.setState({
+  //   quantity: [ setValue ]
+  //  })
+  // }
+
+  updateQuantity = (e) => {
+    const { quantity } = this.state
+    const name = e.target.name;
+    const value = e.target.value;
+    let setValue = quantity.map((item) => {
+      if (name === item.name) {
+        return {...item, value: value}
+      }
+      return item
+    })
+    this.setState({
+      quantity:  setValue 
+    })
+    this.totalProductPrice()
+  }
+
+  // totalProductPrice = () => {
+  //   const { prices, quantity } = this.state
+  //   const priceArry = []
+  //   const quantityArr = []
+  //   let price = Math.max(prices.price)
+  //   let qty = Math.max(quantity.value)
+
+  //   console.log(priceArry, quantityArr)
+  //   if (prices.id === quantity.id) {
+  //     return ( Math.max(price * qty).toFixed(2) ) 
+  //   }
+  // }
+
+  cartItems = [
+    {componet: <ComputerMouse price={this.collectPrice} />, name: 'mouse', id: 1},
+    {componet: <ComputerKeyboard price={this.collectPrice} />, name: 'keyboard', id: 2},
+    {componet: <HeadPhones price={this.collectPrice} />, name: 'headphones', id: 3}
+  ]
   
   render() {
   
-    const cartItems = [
-      {componet: <ComputerMouse />},
-      {componet: <ComputerKeyboard  />},
-      {componet: <HeadPhones />}
-    ]
-  
+
     return(
       <div className="parent-div">
         <div className="message-box">
@@ -46,25 +102,26 @@ class CustomerCartPage extends React.Component {
             </div>
             <hr  className="hr"/>
           </div>   
-              {cartItems.length ? 
-                cartItems.map((item) => (
-                <div className="cart-items">              
+            { this.cartItems.length ? 
+                this.cartItems.map((item) => (
+                <div className="cart-items" key={item.id}>            
                   {item.componet}
                   {/* create function to setstate of item price then multipy that by quantity */}
-                  <select name="Quantity" id="" className="quantity">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                  <select name={item.name} id={item.id} className="quantity" onLoad={this.collectQuantity} onChange={this.updateQuantity}>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
                   </select>
-                  <h4 className="total-price">00.00</h4> 
-                  <hr  className="hr"/>          
+                  <h4 className="total-price">{this.totalProductPrice}</h4> 
+                  <hr className="hr"/>          
                 </div> 
                 ))
                 :
                 <div className="cart-items">
                   <h3>Cart is empty</h3> 
-                </div> 
+                </div>
+              
               }
         </div>
         <div className="cart-summary-and-totals">
@@ -109,7 +166,8 @@ class CustomerCartPage extends React.Component {
               </div>
               <div className="price-div">
                 00.00
-                {/* output of function to add cart total */}
+              {/* output of function to add total */}
+
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@ import KeyBoard from "../assets/keyboard-pic.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 
-const ComputerKeyboard = () => (
+const ComputerKeyboard = ({price}) => (
 
   <div className="main-wrapper">
     <FontAwesomeIcon icon={faClose} className="close"/>
@@ -13,7 +13,7 @@ const ComputerKeyboard = () => (
       <h4>Keyboard</h4>
     </div>
     <div className="price-wrapper">
-      <h3>25.99</h3>
+      <h3 onLoad={price('keyboard',25.99, 2)}>25.99</h3>
     </div>
   </div>
 )
