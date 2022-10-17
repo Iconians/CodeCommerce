@@ -4,6 +4,7 @@ import ComputerKeyboard from "../ComputerKeyboard/ComputerKeyboard";
 import ComputerMouse from "../ComputerMouse/ComputerMouse";
 import HeadPhones from "../HeadPhones/HeadPhones";
 import InputBase from "../InputBase/InputBsae";
+import CartItem from "../CartItem/CartItem";
 
 
 class CustomerCartPage extends React.Component {
@@ -11,76 +12,29 @@ class CustomerCartPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      prices: [],
       quantity: [
-        {name: 'mouse', value: 1, id: 1},
-        {name: 'keyboard', value: 1, id: 2},
-        {name: 'headphones', value: 1, id: 3}
+        {name: 'mouse', value: 1, id: 1, price: 59.99},
+        {name: 'keyboard', value: 1, id: 2, price: 26.99},
+        {name: 'headphones', value: 1, id: 3, price: 38.99}
       ]
     }
   }
-  
-    collectPrice = (name, price, id) => {
-      this.setState((prevState) => ({
-        prices: [...prevState.prices, { name: name, price: price, id: id } ]
-      }))
-    } 
-  
-    
-  
 
-  // collectQuantity = (e) => {
-  //  const { quantity } = this.state
-  //  const name = e.target.name;
-  //  const id = e.target.id;
-  //  const value = e.target.value
-  //  let setValue = quantity.map((item) => (
-  //   {...item, name: name, value: value, id: id}
-  //  ))
-  //  console.log(name)
-  //  this.setState({
-  //   quantity: [ setValue ]
-  //  })
-  // }
-
-  updateQuantity = (e) => {
+  updateQuantity = ({ target: { name, value } }) => {
     const { quantity } = this.state
-    const name = e.target.name;
-    const value = e.target.value;
     let setValue = quantity.map((item) => {
       if (name === item.name) {
-        return {...item, value: value}
+        return {...item, value: value, totalPrice: (+value * item.price)}
       }
       return item
     })
     this.setState({
       quantity:  setValue 
     })
-    this.totalProductPrice()
   }
-
-  // totalProductPrice = () => {
-  //   const { prices, quantity } = this.state
-  //   const priceArry = []
-  //   const quantityArr = []
-  //   let price = Math.max(prices.price)
-  //   let qty = Math.max(quantity.value)
-
-  //   console.log(priceArry, quantityArr)
-  //   if (prices.id === quantity.id) {
-  //     return ( Math.max(price * qty).toFixed(2) ) 
-  //   }
-  // }
-
-  cartItems = [
-    {componet: <ComputerMouse price={this.collectPrice} />, name: 'mouse', id: 1},
-    {componet: <ComputerKeyboard price={this.collectPrice} />, name: 'keyboard', id: 2},
-    {componet: <HeadPhones price={this.collectPrice} />, name: 'headphones', id: 3}
-  ]
   
   render() {
-  
-
+    const { quantity } = this.state;
     return(
       <div className="parent-div">
         <div className="message-box">
@@ -102,20 +56,18 @@ class CustomerCartPage extends React.Component {
             </div>
             <hr  className="hr"/>
           </div>   
-            { this.cartItems.length ? 
-                this.cartItems.map((item) => (
-                <div className="cart-items" key={item.id}>            
-                  {item.componet}
-                  {/* create function to setstate of item price then multipy that by quantity */}
-                  <select name={item.name} id={item.id} className="quantity" onLoad={this.collectQuantity} onChange={this.updateQuantity}>
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                    <option value='4'>4</option>
-                  </select>
-                  <h4 className="total-price">{this.totalProductPrice}</h4> 
-                  <hr className="hr"/>          
-                </div> 
+            { quantity.length ? 
+                quantity.map((item) => (
+                  <div className="cart-items" key={item.id}>
+                    <CartItem name={item.name} price={item.price} totalPrice={item.totalPrice} />    
+                    {/* {item.componet} */}
+                    {/* create function to setstate of item price then multipy that by quantity */}
+                    <select name={item.name} id={item.id} className="quantity" onLoad={this.collectQuantity} defaultValue='0' onChange={this.updateQuantity}>
+                      {[...Array(10).keys()].map((item) => (<option value={item} >{item}</option>))}
+                    </select>
+                    <h4 className="total-price">{item.totalPrice}</h4> 
+                    <hr className="hr"/>          
+                  </div> 
                 ))
                 :
                 <div className="cart-items">
