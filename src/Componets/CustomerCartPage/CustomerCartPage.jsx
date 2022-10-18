@@ -28,7 +28,7 @@ class CustomerCartPage extends React.Component {
     let setValue = cartItemsData.map((item) => {
       if (name === item.name) {
         if (parseInt(value) === 0) {
-          this.removeItem(item.id)
+          this.removeItem(item.id )
         }
         return {...item, value: parseInt(value), totalPrice: (+value * item.price).toFixed(2)}
       }
