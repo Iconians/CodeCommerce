@@ -1,9 +1,10 @@
 import React from "react";
 import "./CustomerCartPage.css";
-import ComputerKeyboard from "../ComputerKeyboard/ComputerKeyboard";
-import ComputerMouse from "../ComputerMouse/ComputerMouse";
-import HeadPhones from "../HeadPhones/HeadPhones";
+import CartItem from "../CartItem/CartItem";
 import InputBase from "../InputBase/InputBsae";
+import MousePic from "../assets/mouse-pic.png"
+import KeyBoard from "../assets/keyboard-pic.png"
+import Headphones from "../assets/headphones-pic.png"
 
 
 class CustomerCartPage extends React.Component {
@@ -11,77 +12,89 @@ class CustomerCartPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      prices: [],
-      // quantity: [
-      //   {name: 'mouse', value: 1, id: 1},
-      //   {name: 'keyboard', value: 1, id: 2},
-      //   {name: 'headphones', value: 1, id: 3}
-      // ]
+      cartItemsData: [
+        {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
+        {name: 'keyboard', value: 1, img: KeyBoard, id: 2, price: 26.99, totalPrice: 0.00},
+        {name: 'headphones', value: 1, img: Headphones, id: 3, price: 36.99, totalPrice: 0.00},
+      ],
+      total: 0.00,
+      error: false
     }
   }
 
-    collectPrice = (name, price, id, quantity) => {
-      setTimeout(() => {
-        this.setState((prevState) => ({  
-          prices: [...prevState.prices, { name: name, price: price, id: id, quantity: quantity } ]
-        }))
-      }, 1000);  
-    } 
-  
-    
-  
-
-  // collectQuantity = (e) => {
-  //  const name = e.target.name;
-  //  console.log(name)
-  //  const id = e.target.id;
-  //  const value = e.target.value
-   
-  //  setTimeout(() => {
-  //    this.setState((prevState) => ({
-  //     quantity: [...prevState.quantity, { name: name, value: value, id: id} ]
-  //    }))
-  //   }, 1000);
-  // }
-
-  updateQuantity = (e) => {
-    const { prices } = this.state
-    const name = e.target.name;
-    const value = e.target.value;
-    let setValue = prices.map((item) => {
+  updateQuantity = ({ target: { name, value } }) => {
+    const { cartItemsData } = this.state
+    this.calculateTotal()
+    let setValue = cartItemsData.map((item) => {
       if (name === item.name) {
-        return {...item, quantity: parseInt(value)}
+        if (parseInt(value) === 0) {
+          this.removeItem(item.id)
+        }
+        return {...item, value: parseInt(value), totalPrice: (+value * item.price).toFixed(2)}
       }
+      
       return item
     })
     this.setState({
-      prices:  setValue 
+      cartItemsData: setValue 
     })
+    
+    
+  }
+  
+  removeItem = (id) => {
+    const { cartItemsData } = this.state
+    const index = cartItemsData.findIndex(item => item.id === id)
+  //   let cartItem = cartItemsData.map((item) => {
+  //    if (item.value === 0) {
+  //     cartItemsData.splice(item.id, 1)  
+  //    }
+  //    return item
+  // })
+  // if (index === -1) {
+    cartItemsData.splice(index, 1) 
+  // }
+  console.log(id, index); 
+  // this.setState({
+  //   cartItemsData: cartItem
+  // })
+  
   }
 
-  // totalProductPrice = () => {
-  //   const { prices, quantity } = this.state
+  calculateTotal = () => {
+    const { cartItemsData } = this.state
+    let array = []
+    cartItemsData.map((item) => (
+      array.push(item.totalPrice)
+    ))
+    const sum = array.reduce((accumulator, value) => {
+      return accumulator + Number(value);
+    }, 0)
+    this.setState({
+      total: sum.toFixed(2)
+    })
+  }
   
-  //   setTimeout(() => {
-  //   let price = Math.max()
-  //   let qty = Math.max()
-  //   if ( === ) {
-  //     console.log(( Math.max(price * qty).toFixed(2) )) 
-  //   }
-  //   }, 1000);
-  // }
+  nextPage = () => {
+    const { total } = this.state
+    if (total === 0) {
+      this.setState({ error: true })
+    }
+    else {
+      this.props.next(2)
+    } 
+  }
+
   
-  
-  cartItems = [
-    {componet: <ComputerMouse price={this.collectPrice} />, name: 'mouse', id: 1},
-    {componet: <ComputerKeyboard price={this.collectPrice} />, name: 'keyboard', id: 2},
-    {componet: <HeadPhones price={this.collectPrice} />, name: 'headphones', id: 3}
-  ]
 
   render() {
-   
+    const { cartItemsData, error } = this.state
 
+    
+    
+      
     return(
+
       <div className="parent-div">
         <div className="message-box">
           <p>No messages</p>
@@ -101,34 +114,29 @@ class CustomerCartPage extends React.Component {
               <h4>Total Price</h4>
             </div>
             <hr  className="hr"/>
-          </div>   
-            { this.cartItems.length ? 
-                this.cartItems.map((item) => (
-                <div className="cart-items" key={item.id}>            
-                  {item.componet}
-                  {/* create function to setstate of item price then multipy that by quantity */}
-                  <select name={item.name} id={item.id} className="quantity" onLoad={this.collectQuantity} onChange={this.updateQuantity}>
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                    <option value='4'>4</option>
-                  </select>
-                  <h4 className="total-price">{}</h4> 
-                  <hr className="hr"/>          
-                </div> 
-                ))
-                :
-                <div className="cart-items">
-                  <h3>Cart is empty</h3> 
-                </div>
-              
-              }
+          </div>  
+          { cartItemsData.length ? 
+              cartItemsData.map((item) => (               
+                <div className="cart-items" key={item.id} >            
+                  <CartItem name={item.name} price={item.price} totalPrice={item.totalPrice} img={item.img} />
+                   <select name={item.name} id={item.id} className="quantity" onChange={this.updateQuantity} defaultValue='0'>
+                    {[...Array(10).keys()].map((item) => (<option value={item}>{item}</option>))}
+                   </select>
+                   <h4 className="total-price">{item.totalPrice}</h4> 
+                   <hr className="hr"/>
+                  </div>
+              ))
+            :
+            <div className="cart-items">
+              <h3>Cart is empty</h3> 
+            </div>  
+          }
         </div>
         <div className="cart-summary-and-totals">
           <div className="summary-div">
             <h4>SUMMARY</h4>
           </div>
-          <hr  className="summary-hr"/>
+          <hr className="summary-hr"/>
           <div className="promo-code-div">
             <p>Do you have a promo code?</p>
             <div className="code-inputs-wrapper">
@@ -143,40 +151,39 @@ class CustomerCartPage extends React.Component {
                 <p>Cart Subtotal:</p>
               </div>
               <div className="subtotal-price-div price-div">
-              00.00
-              {/* output of function to add cart total */}
-            </div>
+                {this.state.total}
+              </div>
             </div>  
           
             <div className="shipping-div">
               <div className="total-headings">
                 <p>Shipping & handling:</p>
               </div>
-              <div className="price-div">00.00</div>
+              <div className="price-div">-</div>
             </div>
             <div className="discount-div">
               <div className="total-headings">
                 <p>Discounts:</p>
               </div>
-              <div className="price-div">00.00</div>
+              <div className="price-div">-</div>
             </div>
             <div className="cart-total-div">
               <div className="total-headings">
                 <h5>Cart Total:</h5>
               </div>
               <div className="price-div">
-                00.00
-              {/* output of function to add total */}
-
+                {this.state.total}
               </div>
             </div>
           </div>
           <hr />
           <div>
+            {error ? <p>select items to checkout</p> : null}
             <InputBase 
               className="submit-btn"
               type="submit"
-              value="CHECKOUT" 
+              value="CHECKOUT"
+              onClick={this.nextPage} 
             />
           </div>
         </div>
