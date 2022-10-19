@@ -45,22 +45,22 @@ class CustomerCartPage extends React.Component {
       cartData: setValue 
     })
     this.removeItem(setValue)
-   
   }
   
   removeItem = (array) => {
-    const { cartData } = this.state
+    // const { cartData } = this.state
      let newCartList = array.map((cartItem) => {
-      if (cartItem.value === 0) {
+      if (cartItem.value === 0) {  
       const index = array.findIndex(item => item.id === cartItem.id)
       if (index === -1) {
-        return cartData.splice(index, 1) 
+        array.splice(index, 1)  
       }
       console.log(cartItem.id);
       console.log(index)
       }
       return cartItem
      })
+     console.log(newCartList);
      this.setState({
       cartData: newCartList
     })
