@@ -12,11 +12,15 @@
 
 .message-box {
   grid-area: message-box;
-  background-color: white;
+  background-color: #afafaf;
   height: 100px;
   text-align: left;
-
 }
+
+.message-box > p {
+  margin-bottom: 0px;
+}
+
 .cart {
   grid-area: cart;
   background-color: white;

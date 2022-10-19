@@ -1,31 +1,39 @@
 import React from "react";
 import "./CustomerCartPage.css";
 import CartItem from "../CartItem/CartItem";
-import InputBase from "../InputBase/InputBsae";
 import MousePic from "../assets/mouse-pic.png"
 import KeyBoard from "../assets/keyboard-pic.png"
 import Headphones from "../assets/headphones-pic.png"
+import MassageBox from "../MessageBox/MessageBox";
+import SummaryComponent from "../SummaryComponent/SummaryComponent";
 
+const INIT_CARTDATA = [
+  {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
+  {name: 'keyboard', value: 1, img: KeyBoard, id: 2, price: 26.99, totalPrice: 0.00},
+  {name: 'headphones', value: 1, img: Headphones, id: 3, price: 36.99, totalPrice: 0.00},
+]
 
 class CustomerCartPage extends React.Component {
   
   constructor(props) {
     super(props)
     this.state = {
-      cartItemsData: [
+      cartData: [
         {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
         {name: 'keyboard', value: 1, img: KeyBoard, id: 2, price: 26.99, totalPrice: 0.00},
         {name: 'headphones', value: 1, img: Headphones, id: 3, price: 36.99, totalPrice: 0.00},
       ],
       total: 0.00,
-      error: false
+      error: false,
+      cartIndex: 0,
+      summaryIndex: 0
     }
   }
 
   updateQuantity = ({ target: { name, value } }) => {
-    const { cartItemsData } = this.state
+    const { cartData } = this.state
     this.calculateTotal()
-    let setValue = cartItemsData.map((item) => {
+    let setValue = cartData.map((item) => { 
       if (name === item.name) {
         if (parseInt(value) === 0) {
           this.removeItem(item.id )
@@ -36,35 +44,28 @@ class CustomerCartPage extends React.Component {
       return item
     })
     this.setState({
-      cartItemsData: setValue 
+      cartData: setValue 
     })
     
     
   }
   
   removeItem = (id) => {
-    const { cartItemsData } = this.state
-    const index = cartItemsData.findIndex(item => item.id === id)
-  //   let cartItem = cartItemsData.map((item) => {
-  //    if (item.value === 0) {
-  //     cartItemsData.splice(item.id, 1)  
-  //    }
-  //    return item
-  // })
+    const { cartData } = this.state
+    const index = cartData.findIndex(item => item.id === id)
   // if (index === -1) {
-    cartItemsData.splice(index, 1) 
+    let newArr = cartData.splice(index, 1) 
   // }
-  console.log(id, index); 
-  // this.setState({
-  //   cartItemsData: cartItem
-  // })
-  
+  this.setState({
+    cartData: newArr
+  })
+   
   }
 
   calculateTotal = () => {
-    const { cartItemsData } = this.state
+    const { cartData } = this.state
     let array = []
-    cartItemsData.map((item) => (
+    cartData.map((item) => (
       array.push(item.totalPrice)
     ))
     const sum = array.reduce((accumulator, value) => {
@@ -81,14 +82,21 @@ class CustomerCartPage extends React.Component {
       this.setState({ error: true })
     }
     else {
-      this.props.next(2)
+      // this.props.next(2)
     } 
+  }
+
+  resetcomponet = () => {
+    this.setState({
+      cartData: INIT_CARTDATA,
+      total: 0
+    })
   }
 
   
 
   render() {
-    const { cartItemsData, error } = this.state
+    const { cartData, error, cartIndex, total } = this.state
 
     
     
@@ -96,9 +104,7 @@ class CustomerCartPage extends React.Component {
     return(
 
       <div className="parent-div">
-        <div className="message-box">
-          <p>No messages</p>
-        </div>
+       <MassageBox reset={this.resetcomponet} index={cartIndex} />
         <div className="cart">
           <div className="cart-headings-div">
             <div className="product-h4">
@@ -115,8 +121,8 @@ class CustomerCartPage extends React.Component {
             </div>
             <hr  className="hr"/>
           </div>  
-          { cartItemsData.length ? 
-              cartItemsData.map((item) => (               
+          { cartData.length ? 
+              cartData.map((item) => (               
                 <div className="cart-items" key={item.id} >            
                   <CartItem name={item.name} price={item.price} totalPrice={item.totalPrice} img={item.img} />
                    <select name={item.name} id={item.id} className="quantity" onChange={this.updateQuantity} defaultValue='0'>
@@ -132,61 +138,7 @@ class CustomerCartPage extends React.Component {
             </div>  
           }
         </div>
-        <div className="cart-summary-and-totals">
-          <div className="summary-div">
-            <h4>SUMMARY</h4>
-          </div>
-          <hr className="summary-hr"/>
-          <div className="promo-code-div">
-            <p>Do you have a promo code?</p>
-            <div className="code-inputs-wrapper">
-            <InputBase className="code-input" placeholder="code" />
-            <InputBase className="code-input-btn" type="button" value="APPLY" />
-            </div>
-          </div>
-          <hr />
-          <div className="totals-div">
-            <div className="cart-subtotal-div">
-              <div className="total-headings">
-                <p>Cart Subtotal:</p>
-              </div>
-              <div className="subtotal-price-div price-div">
-                {this.state.total}
-              </div>
-            </div>  
-          
-            <div className="shipping-div">
-              <div className="total-headings">
-                <p>Shipping & handling:</p>
-              </div>
-              <div className="price-div">-</div>
-            </div>
-            <div className="discount-div">
-              <div className="total-headings">
-                <p>Discounts:</p>
-              </div>
-              <div className="price-div">-</div>
-            </div>
-            <div className="cart-total-div">
-              <div className="total-headings">
-                <h5>Cart Total:</h5>
-              </div>
-              <div className="price-div">
-                {this.state.total}
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div>
-            {error ? <p>select items to checkout</p> : null}
-            <InputBase 
-              className="submit-btn"
-              type="submit"
-              value="CHECKOUT"
-              onClick={this.nextPage} 
-            />
-          </div>
-        </div>
+        < SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} />
       </div>
     )
   }
