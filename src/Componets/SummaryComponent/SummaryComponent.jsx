@@ -1,7 +1,7 @@
 import React from "react";
 import InputBase from "../InputBase/InputBsae";
 
-const SummaryComponent = ({ index, error, total, next}) => {
+const SummaryComponent = ({ index, error, total, next, discounts, shipping, subTotal}) => {
   
   if (index === 0) {
     return (
@@ -24,7 +24,7 @@ const SummaryComponent = ({ index, error, total, next}) => {
                 <p>Cart Subtotal:</p>
               </div>
               <div className="subtotal-price-div price-div">
-                {total}
+                {subTotal}
               </div>
             </div>  
           
@@ -32,13 +32,13 @@ const SummaryComponent = ({ index, error, total, next}) => {
               <div className="total-headings">
                 <p>Shipping & handling:</p>
               </div>
-              <div className="price-div">-</div>
+              <div className="price-div">{shipping}</div>
             </div>
             <div className="discount-div">
               <div className="total-headings">
                 <p>Discounts:</p>
               </div>
-              <div className="price-div">-</div>
+              <div className="price-div">{discounts}</div>
             </div>
             <div className="cart-total-div">
               <div className="total-headings">
