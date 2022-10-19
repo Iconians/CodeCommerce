@@ -49,7 +49,7 @@ class CustomerCartPage extends React.Component {
   
   removeItem = (array) => {
     // const { cartData } = this.state
-     let newCartList = array.map((cartItem) => {
+    let newCartList = array.map((cartItem) => {
       if (cartItem.value === 0) {  
       const index = array.findIndex(item => item.id === cartItem.id)
       if (index === -1) {
@@ -59,7 +59,7 @@ class CustomerCartPage extends React.Component {
       console.log(index)
       }
       return cartItem
-     })
+    })
      console.log(newCartList);
      this.setState({
       cartData: newCartList
@@ -70,8 +70,7 @@ class CustomerCartPage extends React.Component {
     let array = []
     itemPrice.map((item) => (
       array.push(item.totalPrice)
-     ))
-
+    ))
     const sum = array.reduce((accumulator, value) => {
       return accumulator + Number(value);
     }, 0)
