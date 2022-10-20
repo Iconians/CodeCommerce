@@ -4,7 +4,7 @@
   grid-template-areas: 
   "message-box cart-summary-and-totals"
   "cart cart-summary-and-totals";
-  background-color: rgba(255, 255, 255, 0.371);
+  background-color: #f5f5f5;
   color: black;
   width: 1400px;
   grid-gap: 15px;
