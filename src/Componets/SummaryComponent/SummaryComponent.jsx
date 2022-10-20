@@ -1,8 +1,9 @@
 import React from "react";
 import InputBase from "../InputBase/InputBase";
+import PromoCodeComponent from "../PromoCodeComponent/PromoCodeComponent";
 
-const SummaryComponent = ({ index, error, total, next, discounts, shipping, subTotal}) => {
-  
+const SummaryComponent = ({ index, error, total, next, discounts, shipping, subTotal, disableBtn}) => {
+
   if (index === 0) {
     return (
       <div className="cart-summary-and-totals">
@@ -10,13 +11,7 @@ const SummaryComponent = ({ index, error, total, next, discounts, shipping, subT
             <h4>SUMMARY</h4>
           </div>
           <hr className="summary-hr"/>
-          <div className="promo-code-div">
-            <p>Do you have a promo code?</p>
-            <div className="code-inputs-wrapper">
-            <InputBase className="code-input" placeholder="code" />
-            <InputBase className="code-input-btn" type="button" value="APPLY" />
-            </div>
-          </div>
+          <PromoCodeComponent />
           <hr />
           <div className="totals-div">
             <div className="cart-subtotal-div">
@@ -50,13 +45,14 @@ const SummaryComponent = ({ index, error, total, next, discounts, shipping, subT
             </div>
           </div>
           <hr />
-          <div>
+          <div className="btn-div">
             {error ? <p>select items to checkout</p> : null}
             <InputBase 
-              className="submit-btn"
+              className={"submit-btn " + (disableBtn ? 'submit-btn-disabled' : null)}  
               type="submit"
               value="CHECKOUT"
-              onClick={next} 
+              onClick={next}
+              disabled={disableBtn} 
             />
           </div>
         </div>

@@ -28,7 +28,14 @@ class CustomerCartPage extends React.Component {
       discounts: 0,
       shipping: 0,
       error: false,
+      disableBtn: false,
       cartIndex: 0,
+    }
+  }
+
+  disableBtn = (array) => {
+    if (array.length === 0) { 
+      this.setState({ disableBtn: true })
     }
   }
 
@@ -54,6 +61,7 @@ class CustomerCartPage extends React.Component {
     this.setState({
       cartData: newCartList
     })
+    this.disableBtn(newCartList)
   }
 
   calculateTotal = (itemPrice) => {
@@ -72,12 +80,12 @@ class CustomerCartPage extends React.Component {
 
   grandTotal = (subtotal) => {
     const { discounts, shipping } = this.state
-   let interger1 = Math.max(subtotal - discounts)
-   let sum = Math.max(interger1 + shipping)
+    let interger1 = Math.max(subtotal - discounts)
+    let sum = Math.max(interger1 + shipping)
 
-   this.setState({ 
-    total: sum.toFixed(2)
-  })
+    this.setState({ 
+     total: sum.toFixed(2)
+    })
   }
   
   nextPage = () => {
@@ -107,6 +115,7 @@ class CustomerCartPage extends React.Component {
       discounts, 
       shipping, 
       subTotal, 
+      disableBtn
     } = this.state
    
     return(
@@ -114,7 +123,7 @@ class CustomerCartPage extends React.Component {
       <div className="parent-div">
         <MassageBox reset={this.resetcomponet} index={cartIndex} />
         <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} />
-        <SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} discounts={discounts} shipping={shipping} subTotal={subTotal} />
+        <SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} discounts={discounts} shipping={shipping} subTotal={subTotal} disableBtn={disableBtn} />
       </div>
     )
   }

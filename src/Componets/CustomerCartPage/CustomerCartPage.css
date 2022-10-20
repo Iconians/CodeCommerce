@@ -7,6 +7,7 @@
   background-color: #f5f5f5;
   color: black;
   width: 1400px;
+  height: 755px;
   grid-gap: 15px;
 }
 
@@ -24,6 +25,7 @@
 .cart {
   grid-area: cart;
   background-color: white;
+  height: 640px;
 }
 
 .cart-headings-div {
@@ -107,6 +109,7 @@
 .cart-summary-and-totals {
   grid-area: cart-summary-and-totals;
   background-color: white;
+  position: relative;
 }
 
 .summary-div {
@@ -150,13 +153,18 @@
 {
   display: flex;
   justify-content: space-between;
+  height: 32px;
+  align-items: center
 }
 
 .total-headings {margin-left: 5px;}
 
-.price-div {
-  margin-right: 5px;
-  margin-top: 28px;
+.price-div {margin-right: 5px;}
+
+.btn-div {
+  position: absolute;
+  bottom: 10px;
+  right: 40px;
 }
 
 .submit-btn {
@@ -168,3 +176,5 @@
   border: none;
   cursor: pointer;
 }
+
+.submit-btn-disabled { background-color: gray;}
