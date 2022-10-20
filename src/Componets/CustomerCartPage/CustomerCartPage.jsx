@@ -41,6 +41,7 @@ class CustomerCartPage extends React.Component {
       return item
     })
     this.calculateTotal(setValue)
+    
     this.setState({
       cartData: setValue 
     })
@@ -48,16 +49,19 @@ class CustomerCartPage extends React.Component {
   }
   
   removeItem = (array) => {
-    let newCartList = array.map((cartItem) => {
-      if (cartItem.value === 0) {     
-        const index = array.findIndex(item => item.id === cartItem.id)
-        array.splice(index, 1)  
-      }
-      console.log(array);
-      return newCartList
+    let newCartList = array.filter((item) => {
+      return item.value !== 0
     })
-    console.log(array);
-    console.log(newCartList);
+    // let newCartList = array.map((cartItem) => {
+    //   if (cartItem.value === 0) {     
+    //     const index = array.findIndex(item => item.id === cartItem.id)
+    //     array.splice(index, 1)  
+    //   }
+    //   console.log(array);
+    //   return newCartList
+    // })
+    // console.log(array);
+    // console.log(newCartList);
     this.setState({
       cartData: newCartList
     })
