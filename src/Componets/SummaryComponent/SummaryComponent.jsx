@@ -1,5 +1,5 @@
 import React from "react";
-import InputBase from "../InputBase/InputBsae";
+import InputBase from "../InputBase/InputBase";
 
 const SummaryComponent = ({ index, error, total, next, discounts, shipping, subTotal}) => {
   

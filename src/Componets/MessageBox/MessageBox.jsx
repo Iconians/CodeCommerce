@@ -1,5 +1,5 @@
 import React from "react";
-import InputBase from "../InputBase/InputBsae";
+import InputBase from "../InputBase/InputBase";
 
 const messageBox = ({ reset, index }) => {
 
