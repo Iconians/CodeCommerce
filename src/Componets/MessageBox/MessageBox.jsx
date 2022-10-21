@@ -1,7 +1,8 @@
 import React from "react";
 import InputBase from "../InputBase/InputBase";
+import "./MessageBox.css"
 
-const messageBox = ({ reset, index }) => {
+const messageBox = ({ reset, index, completed }) => {
 
   if (index === 0) {
     return (
@@ -12,7 +13,26 @@ const messageBox = ({ reset, index }) => {
     ) 
   }
   else if (index === 1) {
-    return 'build code'
+    return (
+      <div className="step-progress-bar-wrapper">
+         <div className="step-item completed">
+            <div className="step-counter">img1</div>
+            <div className="step-name">Cart</div>
+         </div>
+         <div className="step-item active">
+            <div className="step-counter ">img2</div>
+            <div className="step-name">Delivery</div>
+         </div>
+         <div className="step-item ">
+            <div className="step-counter ">img3</div>
+            <div className="step-name">Payment</div>
+         </div>
+         <div className="step-item ">
+            <div className="step-counter">img4</div>
+            <div className="step-name">Confirmation</div>
+         </div>
+      </div>
+    )
   }
   
 

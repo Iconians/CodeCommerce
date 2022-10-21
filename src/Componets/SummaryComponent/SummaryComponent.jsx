@@ -4,7 +4,6 @@ import PromoCodeComponent from "../PromoCodeComponent/PromoCodeComponent";
 
 const SummaryComponent = ({ index, error, total, next, discounts, shipping, subTotal, disableBtn}) => {
 
-  if (index === 0) {
     return (
       <div className="cart-summary-and-totals">
           <div className="summary-div">
@@ -57,7 +56,6 @@ const SummaryComponent = ({ index, error, total, next, discounts, shipping, subT
           </div>
         </div>
     )
-  }
 }
 
 export default SummaryComponent

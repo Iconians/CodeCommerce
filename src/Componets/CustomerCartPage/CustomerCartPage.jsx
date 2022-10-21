@@ -6,6 +6,7 @@ import Headphones from "../assets/headphones-pic.png"
 import MassageBox from "../MessageBox/MessageBox";
 import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import Cart from "../Cart/cart";
+import ShippingComponent from "../ShippingComponent/ShippingComponent";
 
 const INIT_CARTDATA = [
   {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
@@ -29,7 +30,7 @@ class CustomerCartPage extends React.Component {
       shipping: 0,
       error: false,
       disableBtn: false,
-      cartIndex: 0,
+      cartIndex: 1,
     }
   }
 
@@ -122,7 +123,7 @@ class CustomerCartPage extends React.Component {
 
       <div className="parent-div">
         <MassageBox reset={this.resetcomponet} index={cartIndex} />
-        <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} />
+        { cartIndex === 0 ? <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} /> : <ShippingComponent /> }
         <SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} discounts={discounts} shipping={shipping} subTotal={subTotal} disableBtn={disableBtn} />
       </div>
     )

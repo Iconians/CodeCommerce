@@ -1,0 +1,19 @@
+.shipping-component-parent-div {
+  grid-area: cart;
+  height: 640px;
+  width: 1000px;
+}
+
+.shipping-title > h4,
+.shipping-method-title > h4 {
+  text-align: start;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+
+}
+
+.flex > h4, 
+.flex > p {margin: 0;}

@@ -22,7 +22,7 @@
   margin-bottom: 0px;
 }
 
-.cart {
+.cart, .shipping-component-parent-div {
   grid-area: cart;
   background-color: white;
   height: 640px;
