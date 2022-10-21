@@ -8,12 +8,106 @@
 .shipping-method-title > h4 {
   text-align: start;
   margin: 0;
+  margin-left: 10px;
 }
 
 .flex {
   display: flex;
-
 }
 
-.flex > h4, 
-.flex > p {margin: 0;}
+.flex > h5, 
+.flex > p {margin: 10px;}
+
+.address-title-field > h5 {margin-right: 47px;}
+.address-title-field > input,
+.name-field > input {
+  height: 25px;
+  align-self: center;
+  width: 40%;
+}
+
+.address-field > input {
+  height: 25px;
+  align-self: center;
+  width: 78%;
+  margin-left: 36px
+}
+
+.zip-code-field > input {
+  margin-left: 77px;
+  height: 25px;
+  align-self: center;
+  width: 70px;
+}
+
+.country-select-div > select,
+.city-select-div > select {
+  width: 170px;
+  height: 30px;
+  align-self: center;
+}
+
+.state-select-div > select {
+  height: 30px;
+  align-self: center;
+  width: 142px;
+}
+
+.cell-area-code-input {
+  width: 70px;
+  height: 25px;
+  align-self: center;
+  margin-right: 10px;
+  margin-left: 60px;
+}
+
+.cellphone-input,
+.phone-input {
+  width: 252px;
+  height: 25px;
+  align-self: center;
+}
+
+.phone-area-code-input {
+  width: 70px;
+  height: 25px;
+  align-self: center;
+  margin-right: 10px;
+  margin-left: 64px;
+}
+
+.shipping-method-div {
+  position: relative;
+  height: 280px;
+}
+
+.standard-option {margin-left: 10px;}
+
+.standard-option > p {
+  font-size: 18px;
+  align-self: center;
+  margin: 0;
+}
+
+.standard-option > h5 {
+  align-self: center;
+  margin: 0;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.express > h5 {margin-right: 25px;}
+
+.back-btn {
+  position: absolute;
+  left: 25px;
+  bottom: 30px;
+}
+
+.back-btn > input {
+  background-color: white;
+  width: 130px;
+  height: 50px;
+  font-weight: 800;
+  cursor: pointer;
+}

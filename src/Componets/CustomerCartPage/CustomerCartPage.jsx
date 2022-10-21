@@ -88,6 +88,12 @@ class CustomerCartPage extends React.Component {
      total: sum.toFixed(2)
     })
   }
+
+  updateTotal = (shippingprice) => {
+    const { subTotal } = this.state 
+    this.setState({ shipping: shippingprice})
+    this.grandTotal(subTotal)
+  }
   
   nextPage = () => {
     const { total } = this.state
@@ -107,6 +113,13 @@ class CustomerCartPage extends React.Component {
     })
   }
 
+  backPage = () => {
+    const { cartIndex } = this.state
+    if (cartIndex === 1) {
+      this.setState({ cartIndex: 0})
+    }
+  }
+
   render() {
     const { 
       cartData, 
@@ -123,7 +136,7 @@ class CustomerCartPage extends React.Component {
 
       <div className="parent-div">
         <MassageBox reset={this.resetcomponet} index={cartIndex} />
-        { cartIndex === 0 ? <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} /> : <ShippingComponent /> }
+        { cartIndex === 0 ? <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} /> : <ShippingComponent index={this.backPage} shipping={this.updateTotal} total={total}/> }
         <SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} discounts={discounts} shipping={shipping} subTotal={subTotal} disableBtn={disableBtn} />
       </div>
     )
