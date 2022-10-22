@@ -1,28 +1,69 @@
 import React from "react";
 import "./CustomerCartPage.css";
-import MousePic from "../assets/mouse-pic.png"
-import KeyBoard from "../assets/keyboard-pic.png"
-import Headphones from "../assets/headphones-pic.png"
+import MousePic from "../assets/mouse-pic.png";
+import KeyBoard from "../assets/keyboard-pic.png";
+import Headphones from "../assets/headphones-pic.png";
 import MassageBox from "../MessageBox/MessageBox";
 import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import Cart from "../Cart/cart";
 import ShippingComponent from "../ShippingComponent/ShippingComponent";
 
 const INIT_CARTDATA = [
-  {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
-  {name: 'keyboard', value: 1, img: KeyBoard, id: 2, price: 26.99, totalPrice: 0.00},
-  {name: 'headphones', value: 1, img: Headphones, id: 3, price: 36.99, totalPrice: 0.00},
-]
+  {
+    name: "mouse",
+    value: 1,
+    img: MousePic,
+    id: 1,
+    price: 59.99,
+    totalPrice: 0.0,
+  },
+  {
+    name: "keyboard",
+    value: 1,
+    img: KeyBoard,
+    id: 2,
+    price: 26.99,
+    totalPrice: 0.0,
+  },
+  {
+    name: "headphones",
+    value: 1,
+    img: Headphones,
+    id: 3,
+    price: 36.99,
+    totalPrice: 0.0,
+  },
+];
 
 class CustomerCartPage extends React.Component {
-  
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       cartData: [
-        {name: 'mouse', value: 1, img: MousePic, id: 1, price: 59.99, totalPrice: 0.00},
-        {name: 'keyboard', value: 1, img: KeyBoard, id: 2, price: 26.99, totalPrice: 0.00},
-        {name: 'headphones', value: 1, img: Headphones, id: 3, price: 36.99, totalPrice: 0.00},
+        {
+          name: "mouse",
+          value: 1,
+          img: MousePic,
+          id: 1,
+          price: 59.99,
+          totalPrice: 0.0,
+        },
+        {
+          name: "keyboard",
+          value: 1,
+          img: KeyBoard,
+          id: 2,
+          price: 26.99,
+          totalPrice: 0.0,
+        },
+        {
+          name: "headphones",
+          value: 1,
+          img: Headphones,
+          id: 3,
+          price: 36.99,
+          totalPrice: 0.0,
+        },
       ],
       subTotal: 0,
       total: 0,
@@ -31,115 +72,142 @@ class CustomerCartPage extends React.Component {
       error: false,
       disableBtn: false,
       cartIndex: 1,
-    }
+    };
   }
 
   disableBtn = (array) => {
-    if (array.length === 0) { 
-      this.setState({ disableBtn: true })
+    if (array.length === 0) {
+      this.setState({ disableBtn: true });
     }
-  }
+  };
 
   updateQuantity = ({ target: { name, value } }) => {
-    const { cartData } = this.state
-    let setValue = cartData.map((item) => { 
+    const { cartData } = this.state;
+    let setValue = cartData.map((item) => {
       if (name === item.name) {
-        return {...item, value: parseInt(value), totalPrice: (+value * item.price).toFixed(2)}
+        return {
+          ...item,
+          value: parseInt(value),
+          totalPrice: (+value * item.price).toFixed(2),
+        };
       }
-      return item
-    })
-    this.calculateTotal(setValue)
+      return item;
+    });
+    this.calculateTotal(setValue);
     this.setState({
-      cartData: setValue 
-    })
-    this.removeItem(setValue)
-  }
-  
+      cartData: setValue,
+    });
+    this.removeItem(setValue);
+  };
+
   removeItem = (array) => {
     let newCartList = array.filter((item) => {
-      return item.value !== 0
-    })
+      return item.value !== 0;
+    });
     this.setState({
-      cartData: newCartList
-    })
-    this.disableBtn(newCartList)
-  }
+      cartData: newCartList,
+    });
+    this.disableBtn(newCartList);
+  };
 
   calculateTotal = (itemPrice) => {
-    let array = []
-    itemPrice.map((item) => (
-      array.push(item.totalPrice)
-    ))
+    let array = [];
+    itemPrice.map((item) => array.push(item.totalPrice));
     const sum = array.reduce((accumulator, value) => {
       return accumulator + Number(value);
-    }, 0)
+    }, 0);
     this.setState({
-      subTotal: sum.toFixed(2)
-    })
-    this.grandTotal(sum)
-  }
+      subTotal: sum.toFixed(2),
+    });
+    this.grandTotal(sum);
+  };
 
   grandTotal = (subtotal) => {
-    const { discounts, shipping } = this.state
-    let interger1 = Math.max(subtotal - discounts)
-    let sum = Math.max(interger1 + shipping)
+    const { discounts, shipping } = this.state;
+    let interger1 = Math.max(subtotal - discounts);
+    let sum = Math.max(interger1 + shipping);
 
-    this.setState({ 
-     total: sum.toFixed(2)
-    })
-  }
+    this.setState({
+      total: sum.toFixed(2),
+    });
+  };
 
-  updateTotal = (shippingprice) => {
-    const { subTotal } = this.state 
-    this.setState({ shipping: shippingprice})
-    this.grandTotal(subTotal)
-  }
-  
-  nextPage = () => {
-    const { total } = this.state
-    if (total === 0) {
-      this.setState({ error: true })
+  updateTotal = (num) => {
+    console.log(num);
+    const { subTotal } = this.state;
+    if (num === 1 && subTotal >= 40) {
+      this.setState({ shipping: 0 });
+    } else if (num === 1 && subTotal < 40) {
+      this.setState({ shipping: 10 });
+    } else if (num === 2) {
+      this.setState({ shipping: 5 });
     }
-    else {
-      this.setState({ cartIndex: + 1})
-    } 
-  }
+    this.grandTotal(subTotal);
+  };
+
+  nextPage = () => {
+    const { total } = this.state;
+    if (total === 0) {
+      this.setState({ error: true });
+    } else {
+      this.setState({ cartIndex: +1 });
+    }
+  };
 
   resetcomponet = () => {
     this.setState({
       cartData: INIT_CARTDATA,
       subTotal: 0,
-      total: 0
-    })
-  }
+      total: 0,
+    });
+  };
 
   backPage = () => {
-    const { cartIndex } = this.state
+    const { cartIndex } = this.state;
     if (cartIndex === 1) {
-      this.setState({ cartIndex: 0})
+      this.setState({ cartIndex: 0 });
     }
-  }
+  };
 
   render() {
-    const { 
-      cartData, 
-      error, 
-      cartIndex, 
-      total, 
-      discounts, 
-      shipping, 
-      subTotal, 
-      disableBtn
-    } = this.state
-   
-    return(
+    const {
+      cartData,
+      error,
+      cartIndex,
+      total,
+      discounts,
+      shipping,
+      subTotal,
+      disableBtn,
+    } = this.state;
 
+    return (
       <div className="parent-div">
         <MassageBox reset={this.resetcomponet} index={cartIndex} />
-        { cartIndex === 0 ? <Cart index={cartIndex} cartDataArr={cartData} updateQuantity={this.updateQuantity} /> : <ShippingComponent index={this.backPage} shipping={this.updateTotal} total={total}/> }
-        <SummaryComponent index={cartIndex} error={error} total={total} next={this.nextPage} discounts={discounts} shipping={shipping} subTotal={subTotal} disableBtn={disableBtn} />
+        {cartIndex === 0 ? (
+          <Cart
+            index={cartIndex}
+            cartDataArr={cartData}
+            updateQuantity={this.updateQuantity}
+          />
+        ) : (
+          <ShippingComponent
+            index={this.backPage}
+            shipping={this.updateTotal}
+          />
+        )}
+        <SummaryComponent
+          index={cartIndex}
+          error={error}
+          total={total}
+          next={this.nextPage}
+          discounts={discounts}
+          shipping={shipping}
+          subTotal={subTotal}
+          disableBtn={disableBtn}
+        />
       </div>
-    )
+    );
   }
 }
 
