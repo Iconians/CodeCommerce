@@ -7,6 +7,7 @@ import MassageBox from "../MessageBox/MessageBox";
 import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import Cart from "../Cart/cart";
 import ShippingComponent from "../ShippingComponent/ShippingComponent";
+import { onlyNumberValidation } from "../validations";
 
 const INIT_CARTDATA = [
   {
@@ -65,13 +66,28 @@ class CustomerCartPage extends React.Component {
           totalPrice: 0.0,
         },
       ],
+      shippingData: {
+        addressTitle: "",
+        name: "",
+        address: "",
+        zip: "",
+        country: "",
+        city: "",
+        state: "",
+        cellAreaCode: "",
+        cellNum: "",
+        phoneAreaCode: "",
+        phoneNum: "",
+      },
       subTotal: 0,
       total: 0,
       discounts: 0,
       shipping: 0,
-      error: false,
+      cartPageError: false,
+      shippingPageError: {},
       disableBtn: false,
       cartIndex: 1,
+      standardShipping: 0,
     };
   }
 
@@ -118,37 +134,126 @@ class CustomerCartPage extends React.Component {
     }, 0);
     this.setState({
       subTotal: sum.toFixed(2),
+      total: sum.toFixed(2),
     });
-    this.grandTotal(sum);
   };
 
-  grandTotal = (subtotal) => {
-    const { discounts, shipping } = this.state;
+  updateTotal = (subtotal, price) => {
+    const { discounts } = this.state;
     let interger1 = Math.max(subtotal - discounts);
-    let sum = Math.max(interger1 + shipping);
+    let sum = Math.max(interger1 + price);
 
     this.setState({
       total: sum.toFixed(2),
     });
   };
 
-  updateTotal = (num) => {
-    console.log(num);
+  expressShipping = () => {
     const { subTotal } = this.state;
-    if (num === 1 && subTotal >= 40) {
+    this.setState({ shipping: 5 });
+    this.updateTotal(subTotal, 5);
+  };
+
+  standardShipping = () => {
+    const { subTotal } = this.state;
+    if (subTotal >= 40) {
       this.setState({ shipping: 0 });
-    } else if (num === 1 && subTotal < 40) {
+      this.updateTotal(subTotal, 0);
+    } else if (subTotal < 40) {
       this.setState({ shipping: 10 });
-    } else if (num === 2) {
-      this.setState({ shipping: 5 });
+      this.updateTotal(subTotal, 10);
     }
-    this.grandTotal(subTotal);
+  };
+
+  checkErrorBeforeSave = () => {
+    const { shippingData, shippingPageError } = this.state;
+    let errorValue = {};
+    let isError = false;
+    Object.keys(shippingData).forEach((val) => {
+      if (!shippingData[val].length) {
+        errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+        isError = true;
+      }
+    });
+    Object.keys(shippingPageError).forEach((val) => {
+      if (shippingPageError[val].length) {
+        errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+        isError = true;
+      }
+    });
+    this.setState({ shippingPageError: errorValue });
+    console.log(isError);
+
+    return isError;
+  };
+
+  handleValidations = (name, value) => {
+    let errortext;
+    switch (name) {
+      case "zip":
+        errortext = onlyNumberValidation(value);
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            zipError: errortext,
+          },
+        }));
+        break;
+      case "cellAreaCode":
+        errortext = onlyNumberValidation(value);
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            cellAreaCodeError: errortext,
+          },
+        }));
+        break;
+      case "cellNum":
+        errortext = onlyNumberValidation(value);
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            cellNumError: errortext,
+          },
+        }));
+        break;
+      case "phoneAreaCode":
+        errortext = onlyNumberValidation(value);
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            phoneAreaCodeError: errortext,
+          },
+        }));
+        break;
+      case "phoneNum":
+        errortext = onlyNumberValidation(value);
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            phoneNumError: errortext,
+          },
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  handleInputChange = ({ target: { name, value } }) => {
+    this.handleValidations(name, value);
+    this.setState((prevState) => ({
+      shippingData: {
+        ...prevState.shippingData,
+        [name]: value,
+      },
+    }));
   };
 
   nextPage = () => {
     const { total } = this.state;
     if (total === 0) {
-      this.setState({ error: true });
+      this.setState({ cartPageError: true });
     } else {
       this.setState({ cartIndex: +1 });
     }
@@ -179,6 +284,7 @@ class CustomerCartPage extends React.Component {
       shipping,
       subTotal,
       disableBtn,
+      shippingPageError,
     } = this.state;
 
     return (
@@ -193,7 +299,10 @@ class CustomerCartPage extends React.Component {
         ) : (
           <ShippingComponent
             index={this.backPage}
-            shipping={this.updateTotal}
+            handleInputChange={this.handleInputChange}
+            standardShipping={this.standardShipping}
+            expressShipping={this.expressShipping}
+            errorMsg={shippingPageError}
           />
         )}
         <SummaryComponent
