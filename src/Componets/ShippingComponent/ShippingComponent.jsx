@@ -76,7 +76,7 @@ const ShippingComponent = ({
       placeholder: "Area Code",
       placeholder2: "Number",
       error: "cellAreaCodeError",
-      error2: "callNumError",
+      error2: "cellNumError",
     },
     {
       divClassName: "phone-field",
@@ -102,167 +102,102 @@ const ShippingComponent = ({
         </div>
         <div className="shipping-form">
           {formData1stPart.map((item) => (
-            <div className={`flex ${item.divClassName}`}>
+            <div className={`flex input-height`}>
               <h5>{item.h5}</h5>
-              {errorMsg &&
-              errorMsg[item.error] &&
-              errorMsg[item.error].length > 1 ? (
-                <div className="error">{errorMsg[item.error]}</div>
-              ) : null}
-              <InputBase
-                type="text"
-                name={item.name}
-                placeholder={item.placeholder}
-                onChange={handleInputChange}
-              />
+              <div className={item.divClassName}>
+                {errorMsg &&
+                errorMsg[item.error] &&
+                errorMsg[item.error].length > 1 ? (
+                  <div className="error">{errorMsg[item.error]}</div>
+                ) : null}
+                <InputBase
+                  type="text"
+                  name={item.name}
+                  placeholder={item.placeholder}
+                  onChange={handleInputChange}
+                  autoComplete="off"
+                />
+              </div>
             </div>
           ))}
-          {/* <div className="flex address-title-field">
-            <h5>Address Title</h5>
-            <InputBase
-              type="text"
-              name="addressTitle"
-              placeholder="Address Title"
-              onChange={handleInputChange}
-            />
-          </div> */}
-          {/* <div className="flex name-field">
-            <h5>Name - Surname</h5>
-            <InputBase
-              type="text"
-              placeholder="Name"
-              name="name"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="flex address-field">
-            <h5>Your Address</h5>
-            <InputBase
-              type="text"
-              placeholder="Address"
-              name="address"
-              onChange={handleInputChange}
-            />
-          </div> */}
           <div className="flex zip-select-fields">
             {formData2ndpart.map((item) =>
               item.name === "zip" ? (
-                <div className={`flex ${item.divClassName} `}>
+                <div className={`flex input-height`}>
                   <h5>{item.h5}</h5>
-                  <InputBase
-                    type="text"
-                    placeholder={item.placeholder}
-                    name={item.name}
-                    onChange={handleInputChange}
-                  />
+                  <div className={item.divClassName}>
+                    {errorMsg &&
+                    errorMsg[item.error] &&
+                    errorMsg[item.error].length > 1 ? (
+                      <div className="error">{errorMsg[item.error]}</div>
+                    ) : null}
+                    <InputBase
+                      type="text"
+                      placeholder={item.placeholder}
+                      name={item.name}
+                      onChange={handleInputChange}
+                      autoComplete="off"
+                    />
+                  </div>
                 </div>
               ) : (
-                <div className={`flex ${item.divClassName} `}>
+                <div className={`flex input-height`}>
                   <h5>{item.h5}</h5>
-                  <select
-                    name={item.name}
-                    id=""
-                    defaultValue="Select"
-                    onChange={handleInputChange}
-                  >
-                    <option>-Select-</option>
-                    <option>{item.value}</option>
-                  </select>
+                  <div className={item.divClassName}>
+                    {errorMsg &&
+                    errorMsg[item.error] &&
+                    errorMsg[item.error].length > 1 ? (
+                      <div className="error">{errorMsg[item.error]}</div>
+                    ) : null}
+                    <select
+                      name={item.name}
+                      id=""
+                      defaultValue="Select"
+                      onChange={handleInputChange}
+                    >
+                      <option>-Select-</option>
+                      <option>{item.value}</option>
+                    </select>
+                  </div>
                 </div>
               )
             )}
-            {/* <div className="flex zip-code-field">
-              <h5>Zip Code</h5>
-              <InputBase
-                type="text"
-                placeholder="zip"
-                name="zip"
-                onChange={handleInputChange}
-              />
-            </div> */}
-            {/* <div className="flex country-select-div"> 
-              <h5>Country</h5>
-              <select
-                name="country"
-                id=""
-                defaultValue="Select"
-                onChange={handleInputChange}
-              >
-                {[...Array(10).keys()].map((item) => (
-                  <option value={item}>{item}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex city-select-div">
-              <h5>City</h5>
-              <select
-                name="city"
-                id=""
-                defaultValue="Select"
-                onChange={handleInputChange}
-              >
-                {[...Array(10).keys()].map((item) => (
-                  <option value={item}>{item}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex state-select-div">
-              <h5>State</h5>
-              <select name="state" id="" onChange={handleInputChange}>
-                {[...Array(10).keys()].map((item) => (
-                  <option value={item}>{item}</option>
-                ))}
-              </select>
-            </div> */}
           </div>
           {formData3rddPart.map((item) => (
-            <div className={`flex ${item.divClassName}`}>
+            <div className={`flex input-height`}>
               <h5>{item.h5}</h5>
-              <InputBase
-                className={item.input1class}
-                placeholder={item.placeholder}
-                name={item.name}
-                onChange={handleInputChange}
-              />
-              <InputBase
-                className={item.input2Class}
-                placeholder={item.placeholder2}
-                name={item.name2}
-                onChange={handleInputChange}
-              />
+              <div className={item.divClassName}>
+                {errorMsg &&
+                errorMsg[item.error] &&
+                errorMsg[item.error].length > 1 ? (
+                  <div className="error">{errorMsg[item.error]}</div>
+                ) : null}
+                <InputBase
+                  className={item.input1class}
+                  placeholder={item.placeholder}
+                  name={item.name}
+                  onChange={handleInputChange}
+                  maxLength="3"
+                  autoComplete="off"
+                />
+              </div>
+              <div>
+                {errorMsg &&
+                errorMsg[item.error2] &&
+                errorMsg[item.error2].length > 1 ? (
+                  <div className="error">{errorMsg[item.error2]}</div>
+                ) : null}
+                <InputBase
+                  className={item.input2Class}
+                  placeholder={item.placeholder2}
+                  name={item.name2}
+                  onChange={handleInputChange}
+                  maxLength="7"
+                  autoComplete="off"
+                />
+              </div>
             </div>
           ))}
-
-          {/* <div className="flex cellphone-field">
-            <h5>Cell Phone</h5>
-            <InputBase
-              className="cell-area-code-input"
-              placeholder="Area Code"
-              name="cellAreaCode"
-              onChange={handleInputChange}
-            />
-            <InputBase
-              className="cellphone-input"
-              placeholder="Number"
-              name="cellNum"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="flex phone-field">
-            <h5>Telephone</h5>
-            <InputBase
-              className="phone-area-code-input"
-              name="phoneAreaCode"
-              placeholder="Area Code"
-              onChange={handleInputChange}
-            />
-            <InputBase
-              className="phone-input"
-              name="phoneNum"
-              placeholder="Number"
-              onChange={handleInputChange}
-            />
-          </div> */}
         </div>
       </div>
       <div className="shipping-method-div">

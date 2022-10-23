@@ -1,0 +1,9 @@
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.cart-details {text-align: start;}

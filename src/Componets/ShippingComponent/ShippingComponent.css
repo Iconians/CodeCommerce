@@ -15,26 +15,53 @@
   display: flex;
 }
 
+.input-height {
+  height: 58px;
+  align-items: end;
+}
+
+.error {
+  margin-left: auto;
+  color: red;
+  font-size: 14px;
+}
+
 .flex > h5, 
-.flex > p {margin: 10px;}
+.flex > p {
+  margin: 10px;
+  margin-bottom: 0;
+}
+
+.address-title-field {
+  width: 40%;
+  margin-left: 36px;
+}
+
+.name-field {width: 40%;}
 
 .address-title-field > h5 {margin-right: 47px;}
 .address-title-field > input,
 .name-field > input {
   height: 25px;
   align-self: center;
-  width: 40%;
+  width: 98%;
+}
+
+.address-field {
+  margin-left: 36px;
+  width: 79%;
 }
 
 .address-field > input {
   height: 25px;
   align-self: center;
-  width: 78%;
-  margin-left: 36px
+  width: 99%;
+ 
 }
 
+.zip-code-field {margin-left: 78px;}
+
 .zip-code-field > input {
-  margin-left: 77px;
   height: 25px;
   align-self: center;
   width: 70px;
@@ -55,13 +82,19 @@
   background-color: lightgrey;
 }
 
+.cellphone-field {
+  margin-right: 10px;
+  margin-left: 61px;
+}
+
 .cell-area-code-input {
   width: 70px;
   height: 25px;
   align-self: center;
-  margin-right: 10px;
-  margin-left: 60px;
+  /* margin-right: 10px;
+  margin-left: 60px; */
 }
+
 
 .cellphone-input,
 .phone-input {
@@ -70,17 +103,22 @@
   align-self: center;
 }
 
-.phone-area-code-input {
-  width: 70px;
-  height: 25px;
-  align-self: center;
+.phone-field {
   margin-right: 10px;
   margin-left: 64px;
 }
 
+.phone-area-code-input {
+  width: 70px;
+  height: 25px;
+  align-self: center;
+  /* margin-right: 10px;
+  margin-left: 64px; */
+}
+
 .shipping-method-div {
   position: relative;
-  height: 280px;
+  height: 200px;
 }
 
 .standard-option {margin-left: 10px;}
@@ -103,7 +141,7 @@
 .back-btn {
   position: absolute;
   left: 25px;
-  bottom: 30px;
+  bottom: 0px;
 }
 
 .back-btn > input {

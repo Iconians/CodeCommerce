@@ -2,7 +2,6 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .step-item {
@@ -55,15 +54,15 @@
 }
 
 .step-item.completed .step-counter {
-  background-color: #4bb543;
+  background-color: #505450;
 }
 
 .step-item.completed::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #4bb543;
+  border-bottom: 10px solid #505450;
   width: 100%;
-  top: 20px;
+  top: 16px;
   left: 50%;
   z-index: 3;
 }

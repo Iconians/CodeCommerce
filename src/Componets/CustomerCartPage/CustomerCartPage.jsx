@@ -165,7 +165,7 @@ class CustomerCartPage extends React.Component {
     }
   };
 
-  checkErrorBeforeSave = () => {
+  checkErrors = () => {
     const { shippingData, shippingPageError } = this.state;
     let errorValue = {};
     let isError = false;
@@ -190,12 +190,66 @@ class CustomerCartPage extends React.Component {
   handleValidations = (name, value) => {
     let errortext;
     switch (name) {
+      case "addressTitle":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            addressTitleError: errortext,
+          },
+        }));
+        break;
+      case "name":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            nameError: errortext,
+          },
+        }));
+        break;
+      case "address":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            addressError: errortext,
+          },
+        }));
+        break;
       case "zip":
         errortext = onlyNumberValidation(value);
         this.setState((prevState) => ({
           shippingPageError: {
             ...prevState.shippingPageError,
             zipError: errortext,
+          },
+        }));
+        break;
+      case "country":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            countryError: errortext,
+          },
+        }));
+        break;
+      case "city":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            cityError: errortext,
+          },
+        }));
+        break;
+      case "state":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            stateError: errortext,
           },
         }));
         break;
@@ -251,11 +305,18 @@ class CustomerCartPage extends React.Component {
   };
 
   nextPage = () => {
-    const { total } = this.state;
-    if (total === 0) {
-      this.setState({ cartPageError: true });
-    } else {
-      this.setState({ cartIndex: +1 });
+    const { cartIndex, total } = this.state;
+    const checkErrors = this.checkErrors();
+    if (cartIndex === 0) {
+      if (total === 0) {
+        this.setState({ cartPageError: true });
+      } else {
+        this.setState({ cartIndex: +1 });
+      }
+    } else if (cartIndex === 1) {
+      if (!checkErrors) {
+        this.setState({ cartIndex: 2 });
+      }
     }
   };
 
@@ -314,6 +375,7 @@ class CustomerCartPage extends React.Component {
           shipping={shipping}
           subTotal={subTotal}
           disableBtn={disableBtn}
+          cartData={cartData}
         />
       </div>
     );
