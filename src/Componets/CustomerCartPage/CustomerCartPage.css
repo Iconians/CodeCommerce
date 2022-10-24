@@ -161,6 +161,12 @@
 
 .price-div {margin-right: 5px;}
 
+.shipping-summary-parent-div,
+.shipping-method-parent-div {
+  text-align: left;
+  font-size: 20px;
+}
+
 .btn-div {
   position: absolute;
   bottom: 10px;

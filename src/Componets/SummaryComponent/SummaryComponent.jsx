@@ -2,6 +2,8 @@ import React from "react";
 import CartSummary from "../CartSummary/CartSummary";
 import InputBase from "../InputBase/InputBase";
 import PromoCodeComponent from "../PromoCodeComponent/PromoCodeComponent";
+import ShippingMethod from "../ShippingMethod/ShippingMethod";
+import ShippingSummary from "../ShippingSummary/ShippingSummary";
 
 const SummaryComponent = ({
   index,
@@ -13,6 +15,7 @@ const SummaryComponent = ({
   subTotal,
   disableBtn,
   cartData,
+  shippingData,
 }) => {
   const buttonValue = () => {
     if (index === 0) {
@@ -24,7 +27,6 @@ const SummaryComponent = ({
     //   return "NEXT";
     // }
   };
-  console.log(buttonValue());
   return (
     <div className="cart-summary-and-totals">
       <div className="summary-div">
@@ -49,7 +51,7 @@ const SummaryComponent = ({
           <div className="total-headings">
             <p>Shipping & handling:</p>
           </div>
-          <div className="price-div">{shipping}</div>
+          <div className="price-div">{shipping.shippingCost}</div>
         </div>
         <div className="discount-div">
           <div className="total-headings">
@@ -65,6 +67,8 @@ const SummaryComponent = ({
         </div>
       </div>
       <hr />
+      {index === 1 ? <ShippingSummary shippingData={shippingData} /> : null}
+      {index === 1 ? <ShippingMethod shipping={shipping} /> : null}
       <div className="btn-div">
         {error ? <p>select items to checkout</p> : null}
         <InputBase

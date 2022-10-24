@@ -82,7 +82,11 @@ class CustomerCartPage extends React.Component {
       subTotal: 0,
       total: 0,
       discounts: 0,
-      shipping: 0,
+      shipping: {
+        shippingCost: 0,
+        shippingTitle: "",
+        ShippingDescription: "",
+      },
       cartPageError: false,
       shippingPageError: {},
       disableBtn: false,
@@ -150,17 +154,35 @@ class CustomerCartPage extends React.Component {
 
   expressShipping = () => {
     const { subTotal } = this.state;
-    this.setState({ shipping: 5 });
+    this.setState({
+      shipping: {
+        shippingCost: 5,
+        shippingTitle: "Express",
+        shippingDescription: "Delivery in 1-3 Business Days",
+      },
+    });
     this.updateTotal(subTotal, 5);
   };
 
   standardShipping = () => {
     const { subTotal } = this.state;
     if (subTotal >= 40) {
-      this.setState({ shipping: 0 });
+      this.setState({
+        shipping: {
+          shippingCost: 0,
+          shippingTitle: "Standard",
+          shippingDescription: "Delivery in 4-6 Business Days",
+        },
+      });
       this.updateTotal(subTotal, 0);
     } else if (subTotal < 40) {
-      this.setState({ shipping: 10 });
+      this.setState({
+        shipping: {
+          shippingCost: 10,
+          shippingTitle: "Standard",
+          shippingDescription: "Delivery in 4-6 Business Days",
+        },
+      });
       this.updateTotal(subTotal, 10);
     }
   };
@@ -346,6 +368,7 @@ class CustomerCartPage extends React.Component {
       subTotal,
       disableBtn,
       shippingPageError,
+      shippingData,
     } = this.state;
 
     return (
@@ -376,6 +399,7 @@ class CustomerCartPage extends React.Component {
           subTotal={subTotal}
           disableBtn={disableBtn}
           cartData={cartData}
+          shippingData={shippingData}
         />
       </div>
     );
