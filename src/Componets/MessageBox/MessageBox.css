@@ -49,6 +49,8 @@
   margin-bottom: 6px;
 }
 
+.step-item .step-counter-active {background-color: #505450;}
+
 .step-item.active {
   font-weight: bold;
 }

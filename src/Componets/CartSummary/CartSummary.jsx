@@ -10,7 +10,6 @@ const CartSummary = ({ cartData }) => {
     <div className="cart-summary-parent-div">
       {array.map((item) => (
         <div className="cart-item">
-          {/* <div className="img">{item.img}</div> */}
           <div className="cart-details">
             <div>{item.name}</div>
             <div>Qty {item.value}</div>

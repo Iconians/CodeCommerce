@@ -15,24 +15,42 @@ const messageBox = ({ reset, index, completed }) => {
         />
       </div>
     );
-  } else if (index === 1) {
+  } else {
     return (
       <div className="step-progress-bar-wrapper">
         <div className="step-item completed">
           <div className="step-counter"></div>
           <div className="step-name">Cart</div>
         </div>
-        <div className="step-item active">
-          <div className="step-counter "></div>
-          <div className="step-name">Delivery</div>
+        <div
+          className={
+            "step-item " +
+            (index === 1 ? "active" : null) +
+            (index === 2 ? " completed" : null)
+          }
+        >
+          <div
+            className={
+              "step-counter " + (index === 1 ? "step-counter-active" : null)
+            }
+          ></div>
+          <div className="step-name ">Delivery</div>
         </div>
-        <div className="step-item ">
-          <div className="step-counter "></div>
-          <div className="step-name">Payment</div>
+        <div className={"step-item " + (index === 2 ? "active" : null)}>
+          <div
+            className={
+              "step-counter " + (index === 2 ? "step-counter-active" : null)
+            }
+          ></div>
+          <div className="step-name ">Payment</div>
         </div>
-        <div className="step-item ">
-          <div className="step-counter"></div>
-          <div className="step-name">Confirmation</div>
+        <div className={"step-item " + (index === 3 ? "active" : null)}>
+          <div
+            className={
+              "step-counter " + (index === 3 ? "step-counter-active" : null)
+            }
+          ></div>
+          <div className="step-name ">Confirmation</div>
         </div>
       </div>
     );

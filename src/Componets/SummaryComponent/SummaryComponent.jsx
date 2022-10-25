@@ -20,8 +20,10 @@ const SummaryComponent = ({
   const buttonValue = () => {
     if (index === 0) {
       return "CHECKOUT";
-    } else {
+    } else if (index === 1) {
       return "  NEXT  ";
+    } else {
+      return `PAY ${total} `;
     }
     // else if (index === 1) {
     //   return "NEXT";
@@ -67,8 +69,8 @@ const SummaryComponent = ({
         </div>
       </div>
       <hr />
-      {index === 1 ? <ShippingSummary shippingData={shippingData} /> : null}
-      {index === 1 ? <ShippingMethod shipping={shipping} /> : null}
+      {index === 2 ? <ShippingSummary shippingData={shippingData} /> : null}
+      {index === 2 ? <ShippingMethod shipping={shipping} /> : null}
       <div className="btn-div">
         {error ? <p>select items to checkout</p> : null}
         <InputBase

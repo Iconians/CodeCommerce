@@ -7,7 +7,14 @@ import MassageBox from "../MessageBox/MessageBox";
 import SummaryComponent from "../SummaryComponent/SummaryComponent";
 import Cart from "../Cart/cart";
 import ShippingComponent from "../ShippingComponent/ShippingComponent";
-import { onlyNumberValidation } from "../validations";
+import {
+  onlyNumberValidation,
+  onlyTextValidation,
+  cardNumberValidation,
+  securityCodeValidation,
+} from "../validations";
+import { AMERICANEXPRESS, OTHERCARDS } from "../constants";
+import PaymentComponent from "../PaymentComponent/PaymentComponent";
 
 const INIT_CARTDATA = [
   {
@@ -79,6 +86,13 @@ class CustomerCartPage extends React.Component {
         phoneAreaCode: "",
         phoneNum: "",
       },
+      paymentData: {
+        cardName: "",
+        cardNumber: "",
+        cardMonth: "",
+        cardYear: "",
+        cardCvv: "",
+      },
       subTotal: 0,
       total: 0,
       discounts: 0,
@@ -89,9 +103,12 @@ class CustomerCartPage extends React.Component {
       },
       cartPageError: false,
       shippingPageError: {},
+      paymentPageError: {},
       disableBtn: false,
-      cartIndex: 1,
+      cartIndex: 2,
       standardShipping: 0,
+      cardType: "",
+      maxLength: OTHERCARDS,
     };
   }
 
@@ -209,6 +226,28 @@ class CustomerCartPage extends React.Component {
     return isError;
   };
 
+  findDebitCardType = (cardNumber) => {
+    const regexPattern = {
+      MASTERCARD: /^5[1-5][0-9]{1,}|^2[2-7][0-9]{1,}$/,
+      VISA: /^4[0-9]{2,}$/,
+      AMERICAN_EXPRESS: /^3[47][0-9]{5,}$/,
+      DISCOVER: /^6(?:011|5[0-9]{2})[0-9]{3,}$/,
+    };
+    for (const card in regexPattern) {
+      if (cardNumber.replace(/[^\d]/g, "").match(regexPattern[card]))
+        return card;
+    }
+    return "";
+  };
+
+  cardLength = (cardType) => {
+    if (cardType === "AMERICAN_EXPRESS") {
+      return AMERICANEXPRESS.length;
+    } else {
+      return OTHERCARDS.length;
+    }
+  };
+
   handleValidations = (name, value) => {
     let errortext;
     switch (name) {
@@ -311,19 +350,82 @@ class CustomerCartPage extends React.Component {
           },
         }));
         break;
+      case "cardName":
+        errortext = onlyTextValidation(value);
+        this.setState((prevState) => ({
+          paymentPageError: {
+            ...prevState.paymentPageError,
+            cardNameError: errortext,
+          },
+        }));
+        break;
+      case "cardNumber":
+        errortext = cardNumberValidation(value);
+        const card = this.findDebitCardType(value);
+        const length = this.cardLength(card);
+        this.setState((prevState) => ({
+          cardType: card,
+          maxLength: length,
+          paymentPageError: {
+            ...prevState.paymentPageError,
+            paymentPageError: errortext,
+          },
+        }));
+        break;
+      case "cardMonth":
+        errortext = "";
+        break;
+      case "cardYear":
+        errortext = "";
+        break;
+      case "cardCvv":
+        errortext = securityCodeValidation(3, value);
+        this.setState((prevState) => ({
+          ...prevState.paymentPageError,
+          paymentPageError: errortext,
+        }));
+        break;
       default:
         break;
     }
   };
 
   handleInputChange = ({ target: { name, value } }) => {
+    const { cartIndex } = this.state;
     this.handleValidations(name, value);
-    this.setState((prevState) => ({
-      shippingData: {
-        ...prevState.shippingData,
-        [name]: value,
-      },
-    }));
+    if (cartIndex === 1) {
+      this.setState((prevState) => ({
+        shippingData: {
+          ...prevState.shippingData,
+          [name]: value,
+        },
+      }));
+    } else if (name === "cardNumber") {
+      let mask = value.split(" ").join("");
+      if (mask.length) {
+        mask = mask.match(new RegExp(".{1,4}", "g")).join(" ");
+        this.setState((prevState) => ({
+          paymentData: {
+            ...prevState.paymentData,
+            [name]: mask,
+          },
+        }));
+      } else {
+        this.setState((prevState) => ({
+          paymentData: {
+            ...prevState.paymentData,
+            [name]: "",
+          },
+        }));
+      }
+    } else {
+      this.setState((prevState) => ({
+        paymentData: {
+          ...prevState.paymentData,
+          [name]: value,
+        },
+      }));
+    }
   };
 
   nextPage = () => {
@@ -369,6 +471,10 @@ class CustomerCartPage extends React.Component {
       disableBtn,
       shippingPageError,
       shippingData,
+      paymentPageError,
+      cardType,
+      maxLength,
+      paymentData,
     } = this.state;
 
     return (
@@ -380,7 +486,8 @@ class CustomerCartPage extends React.Component {
             cartDataArr={cartData}
             updateQuantity={this.updateQuantity}
           />
-        ) : (
+        ) : null}
+        {cartIndex === 1 ? (
           <ShippingComponent
             index={this.backPage}
             handleInputChange={this.handleInputChange}
@@ -388,7 +495,18 @@ class CustomerCartPage extends React.Component {
             expressShipping={this.expressShipping}
             errorMsg={shippingPageError}
           />
-        )}
+        ) : null}
+        {cartIndex === 2 ? (
+          <PaymentComponent
+            total={total}
+            errorMsg={paymentPageError}
+            handleInputChange={this.handleInputChange}
+            index={this.backPage}
+            cardType={cardType}
+            maxLength={maxLength}
+            paymentData={paymentData}
+          />
+        ) : null}
         <SummaryComponent
           index={cartIndex}
           error={error}
