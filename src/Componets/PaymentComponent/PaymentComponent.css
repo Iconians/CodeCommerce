@@ -18,7 +18,8 @@
 
 .payment-flex {
   display: flex;
-  margin-bottom: 20px;
+  height: 60px;
+  align-items: end;
 }
 
 .payment-flex > h4 {margin: 0;}
@@ -32,12 +33,13 @@
   width: 345px;
   margin-left: 80px;
   position: relative;
+  height: 60px;
 }
 
 .img {
   width: 50px;
   position: absolute;
-  top: 5px;
+  top: 25px;
   right: 10px;
 }
 
@@ -45,6 +47,12 @@
 .number-div > input {
   height: 30px;
   width: 98%;
+}
+
+.number-div > input {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .month-div {

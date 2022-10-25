@@ -205,23 +205,50 @@ class CustomerCartPage extends React.Component {
   };
 
   checkErrors = () => {
-    const { shippingData, shippingPageError } = this.state;
+    const {
+      cartIndex,
+      shippingData,
+      shippingPageError,
+      paymentPageError,
+      paymentData,
+    } = this.state;
     let errorValue = {};
     let isError = false;
-    Object.keys(shippingData).forEach((val) => {
-      if (!shippingData[val].length) {
-        errorValue = { ...errorValue, [`${val}Error`]: "Required" };
-        isError = true;
-      }
-    });
-    Object.keys(shippingPageError).forEach((val) => {
-      if (shippingPageError[val].length) {
-        errorValue = { ...errorValue, [`${val}Error`]: "Required" };
-        isError = true;
-      }
-    });
-    this.setState({ shippingPageError: errorValue });
-    console.log(isError);
+    if (cartIndex === 1) {
+      Object.keys(shippingData).forEach((val) => {
+        if (!shippingData[val].length) {
+          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+          isError = true;
+        }
+      });
+      Object.keys(shippingPageError).forEach((val) => {
+        if (
+          shippingPageError[val].length &&
+          !paymentPageError.includes(`${val}Error`)
+        ) {
+          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+          isError = true;
+        }
+      });
+      this.setState({ shippingPageError: errorValue });
+    } else {
+      Object.keys(paymentData).forEach((val) => {
+        if (!paymentData[val].length) {
+          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+          isError = true;
+        }
+      });
+      Object.keys(paymentPageError).forEach((val) => {
+        if (
+          paymentPageError[val].length &&
+          !Object.values(paymentPageError) === "Required"
+        ) {
+          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+          isError = true;
+        }
+      });
+      this.setState({ paymentPageError: errorValue });
+    }
 
     return isError;
   };
@@ -368,21 +395,35 @@ class CustomerCartPage extends React.Component {
           maxLength: length,
           paymentPageError: {
             ...prevState.paymentPageError,
-            paymentPageError: errortext,
+            cardNumberError: errortext,
           },
         }));
         break;
       case "cardMonth":
         errortext = "";
+        this.setState((prevState) => ({
+          paymentPageError: {
+            ...prevState.paymentPageError,
+            cardMonthError: errortext,
+          },
+        }));
         break;
       case "cardYear":
         errortext = "";
+        this.setState((prevState) => ({
+          paymentPageError: {
+            ...prevState.paymentPageError,
+            cardYearError: errortext,
+          },
+        }));
         break;
       case "cardCvv":
         errortext = securityCodeValidation(3, value);
         this.setState((prevState) => ({
-          ...prevState.paymentPageError,
-          paymentPageError: errortext,
+          paymentPageError: {
+            ...prevState.paymentPageError,
+            cardCvvError: errortext,
+          },
         }));
         break;
       default:

@@ -55,16 +55,22 @@ export const cardNumberValidation = (cardNumber) => {
    DISCOVER: /^6(?:011|5[0-9]{2})[0-9]{3,}$/,
   };
   for (const card in regexPattern) {
-    if (cardNumber.replace(/[^\d]/g, '').match(regexPattern[card])) {
-      if (cardNumber) {
-        return cardNumber && /^[1-6]{1}[0-9]{14,15}$/i.test(cardNumber.replace(/[^\d]/g, '').trim())
+    if (!cardNumber.replace(/[^\d]/g, '').match(regexPattern[card])) {
+      continue
+    }
+      if (cardNumber && card === 'AMERICAN_EXPRESS') {
+        return cardNumber && /^[1-6]{1}[0-9]{13,14}$/i.test(cardNumber.replace(/[^\d]/g, '').trim())
+        ? '' 
+        : 'Enter a Valid Card';
+      }else {
+        return cardNumber && /^[1-6]{1}[0-9]{15,16}$/i.test(cardNumber.replace(/[^\d]/g, '').trim())
         ? '' 
         : 'Enter a Valid Card';
       }
-    }
+   
   }
-  return 'Enter a Valid Card';
+  return 'Enter a Valid Card help';
 }
 
 export const securityCodeValidation = (min, value) => 
-  (value && value.length < min) ? ' must be 3 charecters or more' : '';
+  (value && value.length < min) ? ' must be 3 digits' : '';

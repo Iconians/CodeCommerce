@@ -12,7 +12,6 @@ const PaymentComponent = ({
   maxLength,
   paymentData,
 }) => {
-  console.log(cardType);
   const formData1stPart = [
     {
       name: "cardName",
@@ -41,7 +40,7 @@ const PaymentComponent = ({
       className: "year-div",
       name: "cardYear",
       value: "2020",
-      error: "cardNumber",
+      error: "cardYearError",
     },
   ];
 
