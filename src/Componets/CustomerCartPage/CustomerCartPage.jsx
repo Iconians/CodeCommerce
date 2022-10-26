@@ -163,62 +163,37 @@ class CustomerCartPage extends React.Component {
       subTotal: sum.toFixed(2),
       total: sum.toFixed(2),
     });
-    this.updateTotal(sum, 0);
+    this.updateTotal(sum, 0, 0);
   };
 
   applydiscount = (code) => {
-    console.log(code);
+    let codeValue = 0;
     const { discountCodes, subTotal } = this.state;
     Object.keys(discountCodes).forEach((val) => {
       if (val === code) {
         this.setState({ discounts: discountCodes[val] });
+        codeValue = discountCodes[val];
       }
+      console.log(codeValue);
     });
-    this.updateTotal(subTotal, 0);
+    this.updateTotal(subTotal, 0, codeValue);
   };
 
-  updateTotal = (subtotal, price) => {
+  updateTotal = (subtotal, price, codeValue) => {
     const { discounts } = this.state;
-    let interger1 = Math.max(subtotal - discounts);
-    let sum = Math.max(interger1 + price);
+    let sum = 0;
+    if (codeValue === 0) {
+      let interger1 = Math.max(subtotal - discounts);
+      let total = Math.max(interger1 + price);
+      sum = total;
+    } else {
+      let interger1 = Math.max(subtotal - codeValue);
+      let total = Math.max(interger1 + price);
+      sum = total;
+    }
     this.setState({
       total: sum.toFixed(2),
     });
-  };
-
-  expressShipping = () => {
-    const { subTotal } = this.state;
-    this.setState({
-      shipping: {
-        shippingCost: 5,
-        shippingTitle: "Express",
-        shippingDescription: "Delivery in 1-3 Business Days",
-      },
-    });
-    this.updateTotal(subTotal, 5);
-  };
-
-  standardShipping = () => {
-    const { subTotal } = this.state;
-    if (subTotal >= 40) {
-      this.setState({
-        shipping: {
-          shippingCost: 0,
-          shippingTitle: "Standard",
-          shippingDescription: "Delivery in 4-6 Business Days",
-        },
-      });
-      this.updateTotal(subTotal, 0);
-    } else if (subTotal < 40) {
-      this.setState({
-        shipping: {
-          shippingCost: 10,
-          shippingTitle: "Standard",
-          shippingDescription: "Delivery in 4-6 Business Days",
-        },
-      });
-      this.updateTotal(subTotal, 10);
-    }
   };
 
   checkErrors = () => {
@@ -228,6 +203,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError,
       paymentPageError,
       paymentData,
+      shipping,
     } = this.state;
     let errorValue = {};
     let isError = false;
@@ -244,6 +220,10 @@ class CustomerCartPage extends React.Component {
           isError = true;
         }
       });
+      if (!shipping.shippingTitle.length) {
+        errorValue = { ...errorValue, shippingMethodError: "Required" };
+        isError = true;
+      }
       this.setState({ shippingPageError: errorValue });
     } else if (cartIndex === 2) {
       Object.keys(paymentData).forEach((val) => {
@@ -260,7 +240,6 @@ class CustomerCartPage extends React.Component {
       });
       this.setState({ paymentPageError: errorValue });
     }
-
     return isError;
   };
 
@@ -437,8 +416,54 @@ class CustomerCartPage extends React.Component {
           },
         }));
         break;
+      case "shipping-option":
+        errortext = "";
+        this.setState((prevState) => ({
+          shippingPageError: {
+            ...prevState.shippingPageError,
+            shippingMethodError: errortext,
+          },
+        }));
+        break;
       default:
         break;
+    }
+  };
+
+  expressShipping = ({ target: { name } }) => {
+    const { subTotal } = this.state;
+    this.handleValidations(name);
+    this.setState({
+      shipping: {
+        shippingCost: 5,
+        shippingTitle: "Express",
+        shippingDescription: "Delivery in 1-3 Business Days",
+      },
+    });
+    this.updateTotal(subTotal, 5, 0);
+  };
+
+  standardShipping = ({ target: { name } }) => {
+    const { subTotal } = this.state;
+    this.handleValidations(name);
+    if (subTotal >= 40) {
+      this.setState({
+        shipping: {
+          shippingCost: 0,
+          shippingTitle: "Standard",
+          shippingDescription: "Delivery in 4-6 Business Days",
+        },
+      });
+      this.updateTotal(subTotal, 0, 0);
+    } else if (subTotal < 40) {
+      this.setState({
+        shipping: {
+          shippingCost: 10,
+          shippingTitle: "Standard",
+          shippingDescription: "Delivery in 4-6 Business Days",
+        },
+      });
+      this.updateTotal(subTotal, 10, 0);
     }
   };
 
@@ -515,7 +540,26 @@ class CustomerCartPage extends React.Component {
     } else if (cartIndex === 2) {
       this.setState({ cartIndex: 1 });
     } else {
-      this.setState({ cartIndex: 0 });
+      this.setState({
+        cartIndex: 0,
+        cartData: INIT_CARTDATA,
+        subTotal: 0,
+        total: 0,
+        discounts: 0,
+        cardType: "",
+        shipping: {
+          shippingCost: 0,
+          shippingTitle: "",
+          ShippingDescription: "",
+        },
+        paymentData: {
+          cardName: "",
+          cardNumber: "",
+          cardMonth: "",
+          cardYear: "",
+          cardCvv: "",
+        },
+      });
     }
   };
 

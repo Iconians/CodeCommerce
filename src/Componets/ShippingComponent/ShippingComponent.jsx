@@ -204,6 +204,11 @@ const ShippingComponent = ({
         <div className="shipping-method-title">
           <hr />
           <h4>SHIPPING METHOD</h4>
+          {errorMsg &&
+          errorMsg["shippingMethodError"] &&
+          errorMsg["shippingMethodError"].length > 1 ? (
+            <div className="error">{errorMsg["shippingMethodError"]}</div>
+          ) : null}
         </div>
         <div className="shipping-options">
           <div className="flex standard-option">

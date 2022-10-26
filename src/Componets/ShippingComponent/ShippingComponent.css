@@ -91,8 +91,6 @@
   width: 70px;
   height: 25px;
   align-self: center;
-  /* margin-right: 10px;
-  margin-left: 60px; */
 }
 
 
@@ -112,14 +110,14 @@
   width: 70px;
   height: 25px;
   align-self: center;
-  /* margin-right: 10px;
-  margin-left: 64px; */
 }
 
 .shipping-method-div {
   position: relative;
   height: 200px;
 }
+
+.shipping-method-title {height: 70px;}
 
 .standard-option {margin-left: 10px;}
 
