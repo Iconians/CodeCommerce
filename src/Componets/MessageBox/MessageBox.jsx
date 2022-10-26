@@ -26,7 +26,7 @@ const messageBox = ({ reset, index, completed }) => {
           className={
             "step-item " +
             (index === 1 ? "active" : null) +
-            (index === 2 ? " completed" : null)
+            (index >= 2 ? " completed" : null)
           }
         >
           <div
@@ -36,7 +36,13 @@ const messageBox = ({ reset, index, completed }) => {
           ></div>
           <div className="step-name ">Delivery</div>
         </div>
-        <div className={"step-item " + (index === 2 ? "active" : null)}>
+        <div
+          className={
+            "step-item " +
+            (index === 2 ? "active" : null) +
+            (index === 3 ? " completed" : null)
+          }
+        >
           <div
             className={
               "step-counter " + (index === 2 ? "step-counter-active" : null)

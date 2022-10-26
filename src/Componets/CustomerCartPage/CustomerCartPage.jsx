@@ -241,8 +241,8 @@ class CustomerCartPage extends React.Component {
       });
       Object.keys(paymentPageError).forEach((val) => {
         if (
-          paymentPageError[val].length &&
-          !Object.values(paymentPageError) === "Required"
+          paymentPageError[val].length
+          // !Object.values(paymentPageError) === "Required"
         ) {
           errorValue = { ...errorValue, [`${val}Error`]: "Required" };
           isError = true;
@@ -473,6 +473,7 @@ class CustomerCartPage extends React.Component {
   nextPage = () => {
     const { cartIndex, total } = this.state;
     const checkErrors = this.checkErrors();
+    console.log("hi");
     if (cartIndex === 0) {
       if (total === 0) {
         this.setState({ cartPageError: true });
@@ -482,6 +483,10 @@ class CustomerCartPage extends React.Component {
     } else if (cartIndex === 1) {
       if (!checkErrors) {
         this.setState({ cartIndex: 2 });
+      }
+    } else if (cartIndex === 2) {
+      if (!checkErrors) {
+        this.setState({ cartIndex: 3 });
       }
     }
   };
@@ -549,6 +554,7 @@ class CustomerCartPage extends React.Component {
             cardType={cardType}
             maxLength={maxLength}
             paymentData={paymentData}
+            nextPage={this.nextPage}
           />
         ) : null}
         {cartIndex === 3 ? <ConfirmationComponent /> : null}

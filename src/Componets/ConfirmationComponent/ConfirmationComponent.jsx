@@ -11,7 +11,7 @@ const ConfirmationComponent = () => {
         <hr />
       </div>
       <div className="confirmation-body">
-        <div className="checkmark">{<faCheckCircle />}</div>
+        {/* <div className="checkmark">{<faCheckCircle />}</div> */}
         <div className="main-text-body">
           <h3>
             Congratutions. <br /> Your Order is accepted.

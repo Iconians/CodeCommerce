@@ -11,6 +11,7 @@ const PaymentComponent = ({
   cardType,
   maxLength,
   paymentData,
+  nextPage,
 }) => {
   const formData1stPart = [
     {
@@ -112,7 +113,7 @@ const PaymentComponent = ({
         </div>
       </div>
       <div className="payment-btn-div">
-        <InputBase type="submit" value={`PAY ${total}`} />
+        <InputBase type="submit" value={`PAY ${total}`} onClick={nextPage} />
       </div>
       <div className="back-btn payment-back-btn">
         <InputBase type="submit" value="BACK TO ADDRESS" onClick={index} />
