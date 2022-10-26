@@ -5,7 +5,7 @@ import "./PaymentSummary.css";
 const PaymentSummary = ({ cardType, total, cardNumber }) => {
   const lastFour = () => {
     if (cardType === "AMERICAN_EXPRESS") {
-      return cardNumber.cardNumber.replace(/^\s+|\s+$/gm, "").slice(12, 17);
+      return cardNumber.cardNumber.replaceAll(" ", "").slice(10, 14);
     } else {
       return cardNumber.cardNumber.slice(15, 19);
     }

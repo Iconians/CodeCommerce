@@ -2,6 +2,7 @@ import React from "react";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import InputBase from "../InputBase/InputBase";
 import "./ConfirmationComponent.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ConfirmationComponent = () => {
   return (
@@ -11,7 +12,9 @@ const ConfirmationComponent = () => {
         <hr />
       </div>
       <div className="confirmation-body">
-        {/* <div className="checkmark">{<faCheckCircle />}</div> */}
+        <div className="checkmark">
+          {<FontAwesomeIcon icon={faCheckCircle} />}
+        </div>
         <div className="main-text-body">
           <h3>
             Congratutions. <br /> Your Order is accepted.

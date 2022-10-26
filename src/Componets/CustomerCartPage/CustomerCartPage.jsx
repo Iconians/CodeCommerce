@@ -223,11 +223,8 @@ class CustomerCartPage extends React.Component {
         }
       });
       Object.keys(shippingPageError).forEach((val) => {
-        if (
-          shippingPageError[val].length &&
-          !paymentPageError.includes(`${val}Error`)
-        ) {
-          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+        if (shippingPageError[val].length) {
+          errorValue = { ...errorValue, [`${val}`]: "Required" };
           isError = true;
         }
       });
@@ -240,11 +237,8 @@ class CustomerCartPage extends React.Component {
         }
       });
       Object.keys(paymentPageError).forEach((val) => {
-        if (
-          paymentPageError[val].length
-          // !Object.values(paymentPageError) === "Required"
-        ) {
-          errorValue = { ...errorValue, [`${val}Error`]: "Required" };
+        if (paymentPageError[val].length) {
+          errorValue = { ...errorValue, [`${val}`]: "Required" };
           isError = true;
         }
       });
