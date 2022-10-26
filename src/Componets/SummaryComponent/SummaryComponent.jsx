@@ -1,6 +1,7 @@
 import React from "react";
 import CartSummary from "../CartSummary/CartSummary";
 import InputBase from "../InputBase/InputBase";
+import PaymentSummary from "../PaymentSummary/PaymentSummary";
 import PromoCodeComponent from "../PromoCodeComponent/PromoCodeComponent";
 import ShippingMethod from "../ShippingMethod/ShippingMethod";
 import ShippingSummary from "../ShippingSummary/ShippingSummary";
@@ -16,6 +17,8 @@ const SummaryComponent = ({
   disableBtn,
   cartData,
   shippingData,
+  cardType,
+  cardNumber,
 }) => {
   const buttonValue = () => {
     if (index === 0) {
@@ -70,18 +73,28 @@ const SummaryComponent = ({
       </div>
       <hr />
       {index === 2 ? <ShippingSummary shippingData={shippingData} /> : null}
-      {index === 2 ? <ShippingMethod shipping={shipping} /> : null}
+      {index >= 2 ? <ShippingMethod shipping={shipping} /> : null}
+      {index === 3 ? (
+        <PaymentSummary
+          cardType={cardType}
+          total={total}
+          cardNumber={cardNumber}
+        />
+      ) : null}
+
       <div className="btn-div">
         {error ? <p>select items to checkout</p> : null}
-        <InputBase
-          className={
-            "submit-btn " + (disableBtn ? "submit-btn-disabled" : null)
-          }
-          type="submit"
-          value={buttonValue()}
-          onClick={next}
-          disabled={disableBtn}
-        />
+        {index === 3 ? null : (
+          <InputBase
+            className={
+              "submit-btn " + (disableBtn ? "submit-btn-disabled" : null)
+            }
+            type="submit"
+            value={buttonValue()}
+            onClick={next}
+            disabled={disableBtn}
+          />
+        )}
       </div>
     </div>
   );

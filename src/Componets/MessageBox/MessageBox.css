@@ -2,6 +2,7 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
+  grid-area: message-box;
 }
 
 .step-item {

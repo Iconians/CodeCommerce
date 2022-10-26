@@ -1,0 +1,20 @@
+.payment-summary-title {text-align: start;}
+.payment-summary-title > h4 {margin: 0;}
+
+.payment-summary-body {
+  display: flex;
+  align-items: center;
+}
+
+.payment-summary-img-div {
+  height: 34px;
+  margin-right: 5px
+}
+
+.payment-summary-img {
+  width: 60px;
+}
+
+.payment-summary-body > h5,
+.payment-summary-body > p {margin: 0;}
+.payment-summary-body > h5 {margin-right: 10px;}

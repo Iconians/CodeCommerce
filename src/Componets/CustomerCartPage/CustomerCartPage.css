@@ -11,6 +11,19 @@
   grid-gap: 15px;
 }
 
+.confirmation-parent-div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+  "message-box message-box"
+  "cart cart-summary-and-totals";
+  background-color: #f5f5f5;
+  color: black;
+  width: 1400px;
+  height: 755px;
+  grid-gap: 15px;
+}
+
 .message-box {
   grid-area: message-box;
   background-color: #afafaf;

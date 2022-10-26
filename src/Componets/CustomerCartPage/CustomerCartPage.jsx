@@ -15,6 +15,7 @@ import {
 } from "../validations";
 import { AMERICANEXPRESS, OTHERCARDS } from "../constants";
 import PaymentComponent from "../PaymentComponent/PaymentComponent";
+import ConfirmationComponent from "../ConfirmationComponent/ConfirmationComponent";
 
 const INIT_CARTDATA = [
   {
@@ -105,10 +106,10 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 2,
+      cartIndex: 3,
       standardShipping: 0,
       cardType: "",
-      maxLength: OTHERCARDS,
+      maxLength: OTHERCARDS.length,
     };
   }
 
@@ -519,7 +520,9 @@ class CustomerCartPage extends React.Component {
     } = this.state;
 
     return (
-      <div className="parent-div">
+      <div
+        className={cartIndex === 3 ? "confirmation-parent-div" : "parent-div"}
+      >
         <MassageBox reset={this.resetcomponet} index={cartIndex} />
         {cartIndex === 0 ? (
           <Cart
@@ -548,6 +551,7 @@ class CustomerCartPage extends React.Component {
             paymentData={paymentData}
           />
         ) : null}
+        {cartIndex === 3 ? <ConfirmationComponent /> : null}
         <SummaryComponent
           index={cartIndex}
           error={error}
@@ -559,6 +563,8 @@ class CustomerCartPage extends React.Component {
           disableBtn={disableBtn}
           cartData={cartData}
           shippingData={shippingData}
+          cardType={cardType}
+          cardNumber={paymentData}
         />
       </div>
     );

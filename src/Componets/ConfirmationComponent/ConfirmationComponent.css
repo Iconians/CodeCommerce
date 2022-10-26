@@ -1,0 +1,36 @@
+.confirmation-comp-parent-div {
+  grid-area: cart;
+  height: 40rem;
+  background-color: white;
+}
+
+.confirmation-title {margin-left: 5px;}
+.confirmation-title >  h4 {
+  margin: 0;
+  text-align: start;
+}
+
+.main-text-body > p {
+  font-size: 16px;
+  width: 505px;
+  margin: 0 auto;
+}
+
+.track-order-btn {margin: 15px 0;}
+
+.track-order-btn > input {
+  padding: 15px 120px;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+}
+
+.back-home-btn {margin-top: 40px;}
+
+.back-home-btn > input {
+  padding: 15px 60px;
+  background-color: white;
+  outline: solid;
+  font-weight: 700;
+}
