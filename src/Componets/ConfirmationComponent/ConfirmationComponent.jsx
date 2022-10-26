@@ -4,7 +4,7 @@ import InputBase from "../InputBase/InputBase";
 import "./ConfirmationComponent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ConfirmationComponent = () => {
+const ConfirmationComponent = ({ index }) => {
   return (
     <div className="confirmation-comp-parent-div">
       <div className="confirmation-title">
@@ -13,7 +13,7 @@ const ConfirmationComponent = () => {
       </div>
       <div className="confirmation-body">
         <div className="checkmark">
-          {<FontAwesomeIcon icon={faCheckCircle} />}
+          {<FontAwesomeIcon className="checkMark" icon={faCheckCircle} />}
         </div>
         <div className="main-text-body">
           <h3>
@@ -28,7 +28,7 @@ const ConfirmationComponent = () => {
           <InputBase type="submit" value="TRACK ORDER" />
         </div>
         <div className="back-home-btn">
-          <InputBase type="submit" value="BACK TO HOME PAGE" />
+          <InputBase type="submit" value="BACK TO HOME PAGE" onClick={index} />
         </div>
       </div>
     </div>

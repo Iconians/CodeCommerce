@@ -10,6 +10,12 @@
   text-align: start;
 }
 
+.checkMark {
+  height: 130px;
+  margin-top: 30px;
+  color: red;
+}
+
 .main-text-body > p {
   font-size: 16px;
   width: 505px;
@@ -33,4 +39,5 @@
   background-color: white;
   outline: solid;
   font-weight: 700;
+  cursor: pointer;
 }

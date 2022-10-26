@@ -19,6 +19,7 @@ const SummaryComponent = ({
   shippingData,
   cardType,
   cardNumber,
+  discountCode,
 }) => {
   const buttonValue = () => {
     if (index === 0) {
@@ -39,7 +40,7 @@ const SummaryComponent = ({
       </div>
       <hr className="summary-hr" />
       {index === 0 ? (
-        <PromoCodeComponent />
+        <PromoCodeComponent discountCode={discountCode} />
       ) : (
         <CartSummary cartData={cartData} />
       )}
@@ -62,13 +63,13 @@ const SummaryComponent = ({
           <div className="total-headings">
             <p>Discounts:</p>
           </div>
-          <div className="price-div">{discounts}</div>
+          <div className="price-div discount">{discounts}</div>
         </div>
         <div className="cart-total-div">
           <div className="total-headings">
             <h5>Cart Total:</h5>
           </div>
-          <div className="price-div">{total}</div>
+          <div className="price-div total">{total}</div>
         </div>
       </div>
       <hr />

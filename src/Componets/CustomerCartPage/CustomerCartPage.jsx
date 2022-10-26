@@ -94,6 +94,11 @@ class CustomerCartPage extends React.Component {
         cardYear: "",
         cardCvv: "",
       },
+      discountCodes: {
+        fiveoff: 5,
+        twentyoff: 20,
+        fiftyoff: 50,
+      },
       subTotal: 0,
       total: 0,
       discounts: 0,
@@ -106,7 +111,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 3,
+      cartIndex: 0,
       standardShipping: 0,
       cardType: "",
       maxLength: OTHERCARDS.length,
@@ -158,13 +163,24 @@ class CustomerCartPage extends React.Component {
       subTotal: sum.toFixed(2),
       total: sum.toFixed(2),
     });
+    this.updateTotal(sum, 0);
+  };
+
+  applydiscount = (code) => {
+    console.log(code);
+    const { discountCodes, subTotal } = this.state;
+    Object.keys(discountCodes).forEach((val) => {
+      if (val === code) {
+        this.setState({ discounts: discountCodes[val] });
+      }
+    });
+    this.updateTotal(subTotal, 0);
   };
 
   updateTotal = (subtotal, price) => {
     const { discounts } = this.state;
     let interger1 = Math.max(subtotal - discounts);
     let sum = Math.max(interger1 + price);
-
     this.setState({
       total: sum.toFixed(2),
     });
@@ -229,7 +245,7 @@ class CustomerCartPage extends React.Component {
         }
       });
       this.setState({ shippingPageError: errorValue });
-    } else {
+    } else if (cartIndex === 2) {
       Object.keys(paymentData).forEach((val) => {
         if (!paymentData[val].length) {
           errorValue = { ...errorValue, [`${val}Error`]: "Required" };
@@ -467,7 +483,6 @@ class CustomerCartPage extends React.Component {
   nextPage = () => {
     const { cartIndex, total } = this.state;
     const checkErrors = this.checkErrors();
-    console.log("hi");
     if (cartIndex === 0) {
       if (total === 0) {
         this.setState({ cartPageError: true });
@@ -496,6 +511,10 @@ class CustomerCartPage extends React.Component {
   backPage = () => {
     const { cartIndex } = this.state;
     if (cartIndex === 1) {
+      this.setState({ cartIndex: 0 });
+    } else if (cartIndex === 2) {
+      this.setState({ cartIndex: 1 });
+    } else {
       this.setState({ cartIndex: 0 });
     }
   };
@@ -551,7 +570,9 @@ class CustomerCartPage extends React.Component {
             nextPage={this.nextPage}
           />
         ) : null}
-        {cartIndex === 3 ? <ConfirmationComponent /> : null}
+        {cartIndex === 3 ? (
+          <ConfirmationComponent index={this.backPage} />
+        ) : null}
         <SummaryComponent
           index={cartIndex}
           error={error}
@@ -565,6 +586,7 @@ class CustomerCartPage extends React.Component {
           shippingData={shippingData}
           cardType={cardType}
           cardNumber={paymentData}
+          discountCode={this.applydiscount}
         />
       </div>
     );
