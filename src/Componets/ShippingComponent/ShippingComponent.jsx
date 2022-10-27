@@ -205,15 +205,15 @@ const ShippingComponent = ({
           <hr />
           <h4>SHIPPING METHOD</h4>
           {errorMsg &&
-          errorMsg["shippingMethodError"] &&
-          errorMsg["shippingMethodError"].length > 1 ? (
-            <div className="error">{errorMsg["shippingMethodError"]}</div>
+          errorMsg["shippingOptionError"] &&
+          errorMsg["shippingOptionError"].length > 1 ? (
+            <div className="error">{errorMsg["shippingOptionError"]}</div>
           ) : null}
         </div>
         <div className="shipping-options">
           <div className="flex standard-option">
             <input
-              name="shipping-option"
+              name="shippingOption"
               type="radio"
               onChange={standardShipping}
             />
@@ -222,7 +222,7 @@ const ShippingComponent = ({
           </div>
           <div className="flex standard-option express">
             <input
-              name="shipping-option"
+              name="shippingOption"
               type="radio"
               onChange={expressShipping}
             />

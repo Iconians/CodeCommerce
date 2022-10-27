@@ -111,7 +111,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 0,
+      cartIndex: 1,
       standardShipping: 0,
       cardType: "",
       maxLength: OTHERCARDS.length,
@@ -221,7 +221,7 @@ class CustomerCartPage extends React.Component {
         }
       });
       if (!shipping.shippingTitle.length) {
-        errorValue = { ...errorValue, shippingMethodError: "Required" };
+        errorValue = { ...errorValue, shippingOptionError: "Required" };
         isError = true;
       }
       this.setState({ shippingPageError: errorValue });
@@ -266,167 +266,55 @@ class CustomerCartPage extends React.Component {
   };
 
   handleValidations = (name, value) => {
-    let errortext;
-    switch (name) {
-      case "addressTitle":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            addressTitleError: errortext,
-          },
-        }));
-        break;
-      case "name":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            nameError: errortext,
-          },
-        }));
-        break;
-      case "address":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            addressError: errortext,
-          },
-        }));
-        break;
-      case "zip":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            zipError: errortext,
-          },
-        }));
-        break;
-      case "country":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            countryError: errortext,
-          },
-        }));
-        break;
-      case "city":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            cityError: errortext,
-          },
-        }));
-        break;
-      case "state":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            stateError: errortext,
-          },
-        }));
-        break;
-      case "cellAreaCode":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            cellAreaCodeError: errortext,
-          },
-        }));
-        break;
-      case "cellNum":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            cellNumError: errortext,
-          },
-        }));
-        break;
-      case "phoneAreaCode":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            phoneAreaCodeError: errortext,
-          },
-        }));
-        break;
-      case "phoneNum":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            phoneNumError: errortext,
-          },
-        }));
-        break;
-      case "cardName":
-        errortext = onlyTextValidation(value);
-        this.setState((prevState) => ({
-          paymentPageError: {
-            ...prevState.paymentPageError,
-            cardNameError: errortext,
-          },
-        }));
-        break;
-      case "cardNumber":
-        errortext = cardNumberValidation(value);
+    const { cartIndex } = this.state;
+    if (cartIndex === 1) {
+      const shippingValidations = {
+        addressTitle: (value) => onlyTextValidation(value),
+        name: (value) => onlyTextValidation(value),
+        address: () => "",
+        zip: (value) => onlyNumberValidation(value),
+        country: () => "",
+        city: () => "",
+        state: () => "",
+        cellAreaCode: (value) => onlyNumberValidation(value),
+        cellNum: (value) => onlyNumberValidation(value),
+        phoneAreaCode: (value) => onlyNumberValidation(value),
+        phoneNum: (value) => onlyNumberValidation(value),
+        shippingOption: () => "",
+      };
+
+      let shippingErrortext = shippingValidations[name](value);
+      this.setState((prevState) => ({
+        shippingPageError: {
+          ...prevState.shippingPageError,
+          [`${name}Error`]: shippingErrortext,
+        },
+      }));
+    } else {
+      const paymentValidations = {
+        cardName: (value) => onlyTextValidation(value),
+        cardNumber: (value) => cardNumberValidation(value),
+        cardMonth: () => "",
+        cardYear: () => "",
+        cardCvv: (value) => securityCodeValidation(3, value),
+      };
+
+      if (name === "cardNumber") {
         const card = this.findDebitCardType(value);
         const length = this.cardLength(card);
-        this.setState((prevState) => ({
+        this.setState({
           cardType: card,
           maxLength: length,
-          paymentPageError: {
-            ...prevState.paymentPageError,
-            cardNumberError: errortext,
-          },
-        }));
-        break;
-      case "cardMonth":
-        errortext = "";
-        this.setState((prevState) => ({
-          paymentPageError: {
-            ...prevState.paymentPageError,
-            cardMonthError: errortext,
-          },
-        }));
-        break;
-      case "cardYear":
-        errortext = "";
-        this.setState((prevState) => ({
-          paymentPageError: {
-            ...prevState.paymentPageError,
-            cardYearError: errortext,
-          },
-        }));
-        break;
-      case "cardCvv":
-        errortext = securityCodeValidation(3, value);
-        this.setState((prevState) => ({
-          paymentPageError: {
-            ...prevState.paymentPageError,
-            cardCvvError: errortext,
-          },
-        }));
-        break;
-      case "shipping-option":
-        errortext = "";
-        this.setState((prevState) => ({
-          shippingPageError: {
-            ...prevState.shippingPageError,
-            shippingMethodError: errortext,
-          },
-        }));
-        break;
-      default:
-        break;
+        });
+      }
+      let paymentErrortext = paymentValidations[name](value);
+
+      this.setState((prevState) => ({
+        paymentPageError: {
+          ...prevState.paymentPageError,
+          [`${name}Error`]: paymentErrortext,
+        },
+      }));
     }
   };
 
