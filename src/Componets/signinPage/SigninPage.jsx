@@ -106,8 +106,8 @@ class SingninPage extends React.Component {
     }
   };
 
-  switchForm = (e) => {
-    const signIn = e.target.value;
+  switchForm = ({ target: { value } }) => {
+    const signIn = value;
     if (signIn === "true") {
       this.setState({
         signIn: true,
@@ -218,7 +218,8 @@ class SingninPage extends React.Component {
   };
 
   handleInputChange = ({ target: { name, value } }) => {
-    this.state.signIn
+    const { signIn } = this.state;
+    signIn
       ? this.setState((prevState) => ({
           signInForm: {
             ...prevState.signInForm,
@@ -234,6 +235,7 @@ class SingninPage extends React.Component {
   };
 
   render() {
+    const { signIn, createAcc, error, signInForm, formData } = this.state;
     const inputData = [
       {
         label: "Your Email Address *",
@@ -323,14 +325,12 @@ class SingninPage extends React.Component {
         <div className="radio-buttons-div">
           <label
             htmlFor="signin"
-            className={this.state.signIn === true ? "active" : "inactive"}
+            className={signIn === true ? "active" : "inactive"}
           >
             <input
               onChange={this.switchForm}
               value="true"
-              checked={
-                this.state.signIn === true && this.state.createAcc === false
-              }
+              checked={signIn === true && createAcc === false}
               type="radio"
               name="formChoice"
               id="signIn"
@@ -339,14 +339,12 @@ class SingninPage extends React.Component {
           </label>
           <label
             htmlFor="create-account"
-            className={this.state.createAcc === true ? "active" : "inactive"}
+            className={createAcc === true ? "active" : "inactive"}
           >
             <input
               onChange={this.switchForm}
               value="false"
-              checked={
-                this.state.createAcc === true && this.state.signIn === false
-              }
+              checked={createAcc === true && signIn === false}
               type="radio"
               name="formChoice"
               id="createAccount"
@@ -355,29 +353,22 @@ class SingninPage extends React.Component {
           </label>
         </div>
         <div id="signinForm" className="signin-form-div">
-          <form
-            onSubmit={this.state.signIn ? this.handleSignIn : this.handleSubmit}
-          >
-            {this.state.signIn
+          <form onSubmit={signIn ? this.handleSignIn : this.handleSubmit}>
+            {signIn
               ? signIninputData.map((item) => (
                   <label className="form-label" htmlFor={item.name}>
                     <div className="grid-div">
                       {item.label}
-                      {this.state.error &&
-                      this.state.error[item.error] &&
-                      this.state.error[item.error].length > 1 ? (
-                        <div className="error">
-                          {this.state.error[item.error]}
-                        </div>
+                      {error &&
+                      error[item.error] &&
+                      error[item.error].length > 1 ? (
+                        <div className="error">{error[item.error]}</div>
                       ) : null}
                     </div>
                     <InputBase
                       type={item.type}
                       name={item.name}
-                      value={
-                        this.state.signInForm &&
-                        this.state.signInForm[item.name]
-                      }
+                      value={signInForm && signInForm[item.name]}
                       onBlur={this.handleBlur}
                       onChange={this.handleInputChange}
                       className={item.class}
@@ -397,21 +388,17 @@ class SingninPage extends React.Component {
                   <label htmlFor={item.name} className="form-label">
                     <div className="grid-div">
                       {item.label}
-                      {this.state.error &&
-                      this.state.error[item.error] &&
-                      this.state.error[item.error].length > 1 ? (
-                        <div className="error">
-                          {this.state.error[item.error]}
-                        </div>
+                      {error &&
+                      error[item.error] &&
+                      error[item.error].length > 1 ? (
+                        <div className="error">{error[item.error]}</div>
                       ) : null}
                     </div>
                     <InputBase
                       className={item.class}
                       type={item.type}
                       name={item.name}
-                      value={
-                        this.state.formData && this.state.formData[item.name]
-                      }
+                      value={formData && formData[item.name]}
                       onBlur={this.handleBlur}
                       onChange={this.handleInputChange}
                       id={item.id}

@@ -29,9 +29,6 @@ const SummaryComponent = ({
     } else {
       return `PAY ${total} `;
     }
-    // else if (index === 1) {
-    //   return "NEXT";
-    // }
   };
   return (
     <div className="cart-summary-and-totals">

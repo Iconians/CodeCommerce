@@ -2,7 +2,7 @@ import React from "react";
 import InputBase from "../InputBase/InputBase";
 import "./MessageBox.css";
 
-const messageBox = ({ reset, index, completed }) => {
+const messageBox = ({ reset, index }) => {
   if (index === 0) {
     return (
       <div className="message-box">
