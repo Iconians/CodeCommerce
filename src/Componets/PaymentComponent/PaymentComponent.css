@@ -14,7 +14,17 @@
   margin-top: 8px;
 }
 
-.card-details {margin-left: 5px;}
+.card-details {
+  margin-left: 5px;
+  display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 385px);
+    grid-template-areas: 
+    "name name"
+    "card card"
+    "expireMonth expireYear"
+    "cvv cvv";
+}
 
 .payment-flex {
   display: flex;
@@ -24,11 +34,12 @@
 
 .payment-flex > h4 {margin: 0;}
 
+.name-grid-spot {grid-area: name;}
 .name-div {
   margin-left: 20px;
   width: 345px;
 }
-
+.card-grid-spot {grid-area: card;}
 .number-div {
   width: 345px;
   margin-left: 80px;
@@ -55,6 +66,8 @@
   bottom: 0;
 }
 
+.expire-month-grid-spot {grid-area: expireMonth;}
+
 .month-div {
   margin-left: 135px;
   margin-right: 20px;
@@ -66,6 +79,10 @@
   height: 30px;
   width: 125px;
 }
+
+.expire-year-grid-spot {grid-area: expireYear;}
+
+.cvv-grid-spot {grid-area: cvv;}
 
 .cvv-div {margin-left: 190px;}
 

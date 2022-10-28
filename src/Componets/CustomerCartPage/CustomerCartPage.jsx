@@ -111,7 +111,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 1,
+      cartIndex: 0,
       standardShipping: 0,
       cardType: "",
       maxLength: OTHERCARDS.length,
@@ -296,7 +296,8 @@ class CustomerCartPage extends React.Component {
         cardNumber: (value) => cardNumberValidation(value),
         cardMonth: () => "",
         cardYear: () => "",
-        cardCvv: (value) => securityCodeValidation(3, value),
+        cardCvv: (value) =>
+          securityCodeValidation(3, value) || onlyNumberValidation(value),
       };
 
       if (name === "cardNumber") {

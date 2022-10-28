@@ -51,47 +51,64 @@ class SingninPage extends React.Component {
   };
 
   handleValidations = (name, value) => {
-    let errortext;
-    switch (name) {
-      case "email":
-        errortext = emailValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, emailError: errortext },
-        }));
-        break;
-      case "password":
-        errortext = passwordValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, passwordError: errortext },
-        }));
-        break;
-      case "confirmPassword":
-        errortext = this.confirmPasswordValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, confirmPasswordError: errortext },
-        }));
-        break;
-      case "firstName":
-        errortext = onlyTextValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, firstNameError: errortext },
-        }));
-        break;
-      case "surName":
-        errortext = onlyTextValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, surNameError: errortext },
-        }));
-        break;
-      case "postal":
-        errortext = onlyNumberValidation(value);
-        this.setState((prevState) => ({
-          error: { ...prevState.error, postalError: errortext },
-        }));
-        break;
-      default:
-        break;
-    }
+    // let errortext;
+    const validations = {
+      email: (value) => emailValidation(value),
+      password: (value) => passwordValidation(value),
+      confirmPassword: (value) => this.confirmPasswordValidation(value),
+      firstName: (value) => onlyTextValidation(value),
+      surName: (value) => onlyTextValidation(value),
+      postal: (value) => onlyNumberValidation(value),
+    };
+
+    let setValidations = validations[name](value);
+    console.log(setValidations);
+    this.setState((prevState) => ({
+      error: {
+        ...prevState.error,
+        [`${name}Error`]: setValidations,
+      },
+    }));
+    // switch (name) {
+    //   case "email":
+    //     errortext = emailValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, emailError: errortext },
+    //     }));
+    //     break;
+    //   case "password":
+    //     errortext = passwordValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, passwordError: errortext },
+    //     }));
+    //     break;
+    //   case "confirmPassword":
+    //     errortext = this.confirmPasswordValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, confirmPasswordError: errortext },
+    //     }));
+    //     break;
+    //   case "firstName":
+    //     errortext = onlyTextValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, firstNameError: errortext },
+    //     }));
+    //     break;
+    //   case "surName":
+    //     errortext = onlyTextValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, surNameError: errortext },
+    //     }));
+    //     break;
+    //   case "postal":
+    //     errortext = onlyNumberValidation(value);
+    //     this.setState((prevState) => ({
+    //       error: { ...prevState.error, postalError: errortext },
+    //     }));
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
   handleBlur = ({ target: { name, value } }) =>
