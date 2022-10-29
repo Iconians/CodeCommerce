@@ -118,7 +118,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 2,
+      cartIndex: 0,
       standardShipping: 0,
       cardType: "",
       maxLength: OTHERCARDS.length,
@@ -456,7 +456,10 @@ class CustomerCartPage extends React.Component {
     if (cartIndex === 1) {
       this.setState({ cartIndex: 0 });
     } else if (cartIndex === 2) {
-      this.setState({ cartIndex: 1 });
+      this.setState({
+        cartIndex: 1,
+        disableBtn: false,
+      });
     } else {
       this.setState({
         cartIndex: 0,

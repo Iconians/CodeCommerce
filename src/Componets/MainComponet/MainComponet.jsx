@@ -6,7 +6,7 @@ class MainComponet extends React.Component {
   constructor() {
     super();
     this.state = {
-      index: 1,
+      index: 0,
     };
   }
 
