@@ -25,6 +25,7 @@ const INIT_CARTDATA = [
     id: 1,
     price: 59.99,
     totalPrice: 0.0,
+    key: "6",
   },
   {
     name: "keyboard",
@@ -33,6 +34,7 @@ const INIT_CARTDATA = [
     id: 2,
     price: 26.99,
     totalPrice: 0.0,
+    key: "5",
   },
   {
     name: "headphones",
@@ -41,6 +43,7 @@ const INIT_CARTDATA = [
     id: 3,
     price: 36.99,
     totalPrice: 0.0,
+    key: "4",
   },
 ];
 
@@ -56,6 +59,7 @@ class CustomerCartPage extends React.Component {
           id: 1,
           price: 59.99,
           totalPrice: 0.0,
+          key: "4",
         },
         {
           name: "keyboard",
@@ -64,6 +68,7 @@ class CustomerCartPage extends React.Component {
           id: 2,
           price: 26.99,
           totalPrice: 0.0,
+          key: "5",
         },
         {
           name: "headphones",
@@ -72,6 +77,7 @@ class CustomerCartPage extends React.Component {
           id: 3,
           price: 36.99,
           totalPrice: 0.0,
+          key: "6",
         },
       ],
       shippingData: {
@@ -111,7 +117,7 @@ class CustomerCartPage extends React.Component {
       shippingPageError: {},
       paymentPageError: {},
       disableBtn: false,
-      cartIndex: 0,
+      cartIndex: 2,
       standardShipping: 0,
       cardType: "",
       maxLength: OTHERCARDS.length,
@@ -119,8 +125,12 @@ class CustomerCartPage extends React.Component {
   }
 
   disableBtn = (array) => {
+    const { cartIndex } = this.state;
+    console.log(array);
     if (array.length === 0) {
       this.setState({ disableBtn: true });
+    } else if (cartIndex === 2 && array.length === 5) {
+      this.setState({ disableBtn: false });
     }
   };
 
@@ -151,6 +161,21 @@ class CustomerCartPage extends React.Component {
       cartData: newCartList,
     });
     this.disableBtn(newCartList);
+  };
+
+  paymentFieldsFilledOut = () => {
+    const { paymentData } = this.state;
+    let array = [];
+    Object.values(paymentData).forEach((val) => {
+      if (val === "") {
+        return false;
+      } else {
+        array.push(1);
+      }
+    });
+    if (array.length === 0 || array.length === 5) {
+      this.disableBtn(array);
+    }
   };
 
   calculateTotal = (itemPrice) => {
@@ -309,7 +334,7 @@ class CustomerCartPage extends React.Component {
         });
       }
       let paymentErrortext = paymentValidations[name](value);
-
+      this.paymentFieldsFilledOut();
       this.setState((prevState) => ({
         paymentPageError: {
           ...prevState.paymentPageError,
@@ -406,10 +431,13 @@ class CustomerCartPage extends React.Component {
     } else if (cartIndex === 1) {
       if (!checkErrors) {
         this.setState({ cartIndex: 2 });
+        this.paymentFieldsFilledOut();
       }
     } else if (cartIndex === 2) {
       if (!checkErrors) {
-        this.setState({ cartIndex: 3 });
+        this.setState({
+          cartIndex: 3,
+        });
       }
     }
   };
@@ -501,6 +529,8 @@ class CustomerCartPage extends React.Component {
             maxLength={maxLength}
             paymentData={paymentData}
             nextPage={this.nextPage}
+            disableBtn={disableBtn}
+            filledOut={this.paymentFieldsFilledOut}
           />
         ) : null}
         {cartIndex === 3 ? (

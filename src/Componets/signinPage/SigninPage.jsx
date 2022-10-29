@@ -51,7 +51,6 @@ class SingninPage extends React.Component {
   };
 
   handleValidations = (name, value) => {
-    // let errortext;
     const validations = {
       email: (value) => emailValidation(value),
       password: (value) => passwordValidation(value),
@@ -62,53 +61,12 @@ class SingninPage extends React.Component {
     };
 
     let setValidations = validations[name](value);
-    console.log(setValidations);
     this.setState((prevState) => ({
       error: {
         ...prevState.error,
         [`${name}Error`]: setValidations,
       },
     }));
-    // switch (name) {
-    //   case "email":
-    //     errortext = emailValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, emailError: errortext },
-    //     }));
-    //     break;
-    //   case "password":
-    //     errortext = passwordValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, passwordError: errortext },
-    //     }));
-    //     break;
-    //   case "confirmPassword":
-    //     errortext = this.confirmPasswordValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, confirmPasswordError: errortext },
-    //     }));
-    //     break;
-    //   case "firstName":
-    //     errortext = onlyTextValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, firstNameError: errortext },
-    //     }));
-    //     break;
-    //   case "surName":
-    //     errortext = onlyTextValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, surNameError: errortext },
-    //     }));
-    //     break;
-    //   case "postal":
-    //     errortext = onlyNumberValidation(value);
-    //     this.setState((prevState) => ({
-    //       error: { ...prevState.error, postalError: errortext },
-    //     }));
-    //     break;
-    //   default:
-    //     break;
-    // }
   };
 
   handleBlur = ({ target: { name, value } }) =>
@@ -165,12 +123,9 @@ class SingninPage extends React.Component {
           emailError: "There is already an account with this email",
         };
         isError = true;
-        console.log(isError);
       }
     });
     this.setState({ error: errorValue });
-    console.log(isError);
-
     return isError;
   };
 
@@ -196,24 +151,19 @@ class SingninPage extends React.Component {
     let isError = false;
     let data = accounts;
     let keys = Object.keys(data);
-    console.log(keys);
     if (keys.length) {
       keys.forEach((key) => {
         let values = accounts[key];
-        console.log(values.email);
-        console.log(values.password);
         if (
           signInForm.email === values.email &&
           signInForm.password === values.password
         ) {
-          console.log("it checks out");
         } else {
           errorValue = {
             ...errorValue,
             emailError: "No account with this email",
           };
           isError = true;
-          console.log(isError);
         }
       });
     } else {
@@ -221,7 +171,6 @@ class SingninPage extends React.Component {
       isError = true;
     }
     this.setState({ error: errorValue });
-    console.log(isError);
     return isError;
   };
 
@@ -260,6 +209,7 @@ class SingninPage extends React.Component {
         type: "text",
         name: "email",
         error: "emailError",
+        key: "1",
       },
       {
         label: "Create Password *",
@@ -270,6 +220,7 @@ class SingninPage extends React.Component {
         name: "password",
         id: "password-eye",
         error: "passwordError",
+        key: "2",
       },
       {
         label: "Confirm Password *",
@@ -277,6 +228,7 @@ class SingninPage extends React.Component {
         type: "password",
         name: "confirmPassword",
         error: "confirmPasswordError",
+        key: "3",
       },
       {
         label: "First Name *",
@@ -284,6 +236,7 @@ class SingninPage extends React.Component {
         type: "text",
         name: "firstName",
         error: "firstNameError",
+        key: "4",
       },
       {
         label: "Surname *",
@@ -291,6 +244,7 @@ class SingninPage extends React.Component {
         type: "text",
         name: "surName",
         error: "surNameError",
+        key: "5",
       },
       {
         label: "Postcode",
@@ -298,6 +252,7 @@ class SingninPage extends React.Component {
         type: "text",
         name: "postal",
         error: "postalError",
+        key: "6",
       },
     ];
 
@@ -308,6 +263,7 @@ class SingninPage extends React.Component {
         type: "text",
         class: "inputs",
         error: "emailError",
+        key: "7",
       },
       {
         label: "Enter Your Password *",
@@ -316,24 +272,32 @@ class SingninPage extends React.Component {
         class: "inputs",
         id: "password-eye",
         error: "passwordError",
+        key: "8",
       },
     ];
 
     const createAccFormButtons = [
-      { type: "submit", value: "SAVE", class: "btn-inputs save-btn" },
+      { type: "submit", value: "SAVE", class: "btn-inputs save-btn", key: "9" },
       {
         type: "button",
         value: "SIGN UP WITH FACEBOOK",
         class: "btn-inputs facebook-btn",
+        key: "10",
       },
     ];
 
     const signInFormsButtons = [
-      { type: "submit", value: "SIGN IN", class: "btn-inputs save-btn" },
+      {
+        type: "submit",
+        value: "SIGN IN",
+        class: "btn-inputs save-btn",
+        key: "11",
+      },
       {
         type: "button",
         value: "SIGN IN WITH FACEBOOK",
         class: "btn-inputs facebook-btn",
+        key: "12",
       },
     ];
 
@@ -373,7 +337,11 @@ class SingninPage extends React.Component {
           <form onSubmit={signIn ? this.handleSignIn : this.handleSubmit}>
             {signIn
               ? signIninputData.map((item) => (
-                  <label className="form-label" htmlFor={item.name}>
+                  <label
+                    className="form-label"
+                    htmlFor={item.name}
+                    key={item.key}
+                  >
                     <div className="grid-div">
                       {item.label}
                       {error &&
@@ -402,7 +370,11 @@ class SingninPage extends React.Component {
                   </label>
                 ))
               : inputData.map((item) => (
-                  <label htmlFor={item.name} className="form-label">
+                  <label
+                    htmlFor={item.name}
+                    className="form-label"
+                    key={item.key}
+                  >
                     <div className="grid-div">
                       {item.label}
                       {error &&
@@ -435,7 +407,7 @@ class SingninPage extends React.Component {
                 ))}
             {this.state.signIn
               ? signInFormsButtons.map((item) => (
-                  <div className="submit-div">
+                  <div className="submit-div" key={item.key}>
                     <InputBase
                       type={item.type}
                       value={item.value}
@@ -449,7 +421,7 @@ class SingninPage extends React.Component {
                   </div>
                 ))
               : createAccFormButtons.map((item) => (
-                  <div className="submit-div">
+                  <div className="submit-div" key={item.key}>
                     <InputBase
                       type={item.type}
                       value={item.value}

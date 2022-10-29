@@ -108,4 +108,6 @@
   cursor: pointer;
 }
 
+.payment-btn-disabled > input {background-color: gray;}
+
 .payment-back-btn > input {width: 180px;}

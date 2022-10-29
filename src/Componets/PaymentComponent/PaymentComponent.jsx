@@ -12,6 +12,7 @@ const PaymentComponent = ({
   maxLength,
   paymentData,
   nextPage,
+  disableBtn,
 }) => {
   const formData = [
     {
@@ -21,6 +22,7 @@ const PaymentComponent = ({
       className: "name-div",
       placeholder: "name",
       error: "cardNameError",
+      key: "1",
     },
     {
       class: "card-grid-spot",
@@ -29,6 +31,7 @@ const PaymentComponent = ({
       className: "number-div",
       placeholder: "Card Number",
       error: "cardNumberError",
+      key: "2",
     },
     {
       class: "expire-month-grid-spot",
@@ -37,6 +40,7 @@ const PaymentComponent = ({
       name: "cardMonth",
       value: "January",
       error: "cardMonthError",
+      key: "3",
     },
     {
       class: "expire-year-grid-spot",
@@ -44,6 +48,7 @@ const PaymentComponent = ({
       name: "cardYear",
       value: "2020",
       error: "cardYearError",
+      key: "4",
     },
     {
       class: "cvv-grid-spot",
@@ -53,6 +58,7 @@ const PaymentComponent = ({
       placeholder: "CVV",
       error: "cardCvvError",
       maxLength: "3",
+      key: "5",
     },
   ];
 
@@ -66,7 +72,10 @@ const PaymentComponent = ({
         {formData.map((item) => {
           if (item.name === "cardMonth" || item.name === "cardYear") {
             return (
-              <div className={`expire-div payment-flex ${item.class}`}>
+              <div
+                className={`expire-div payment-flex ${item.class}`}
+                key={item.key}
+              >
                 <h4>{item.h4}</h4>
                 <div className={item.className}>
                   {errorMsg &&
@@ -83,7 +92,7 @@ const PaymentComponent = ({
             );
           } else {
             return (
-              <div className={`payment-flex ${item.class}`}>
+              <div className={`payment-flex ${item.class}`} key={item.key}>
                 <h4>{item.h4}</h4>
                 <div className={item.className}>
                   {errorMsg &&
@@ -112,8 +121,17 @@ const PaymentComponent = ({
           }
         })}
       </div>
-      <div className="payment-btn-div">
-        <InputBase type="submit" value={`PAY ${total}`} onClick={nextPage} />
+      <div
+        className={
+          "payment-btn-div " + (disableBtn ? "payment-btn-disabled" : null)
+        }
+      >
+        <InputBase
+          type="submit"
+          value={`PAY ${total}`}
+          onClick={nextPage}
+          disabled={disableBtn}
+        />
       </div>
       <div className="back-btn payment-back-btn">
         <InputBase type="submit" value="BACK TO ADDRESS" onClick={index} />

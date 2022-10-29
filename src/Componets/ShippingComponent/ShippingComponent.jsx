@@ -17,6 +17,7 @@ const ShippingComponent = ({
       name: "addressTitle",
       placeholder: "Address Title",
       error: "addressTitleError",
+      key: "1",
     },
     {
       divClassName: "name-field",
@@ -25,6 +26,7 @@ const ShippingComponent = ({
       name: "name",
       placeholder: "Name",
       error: "nameError",
+      key: "2",
     },
     {
       divClassName: "address-field",
@@ -33,6 +35,7 @@ const ShippingComponent = ({
       name: "address",
       placeholder: "Address",
       error: "addressError",
+      key: "3",
     },
     {
       divClassName: "zip-code-field",
@@ -41,6 +44,7 @@ const ShippingComponent = ({
       name: "zip",
       placeholder: "zip",
       error: "zipError",
+      key: "4",
     },
     {
       divClassName: "country-select-div",
@@ -49,6 +53,7 @@ const ShippingComponent = ({
       name: "country",
       value: "Country",
       error: "countryError",
+      key: "5",
     },
     {
       divClassName: "city-select-div",
@@ -57,6 +62,7 @@ const ShippingComponent = ({
       name: "city",
       value: "City",
       error: "cityError",
+      key: "6",
     },
     {
       divClassName: "state-select-div",
@@ -65,6 +71,7 @@ const ShippingComponent = ({
       name: "state",
       value: "State",
       error: "stateError",
+      key: "7",
     },
     {
       divClassName: "cellphone-field",
@@ -80,6 +87,7 @@ const ShippingComponent = ({
       error: "cellAreaCodeError",
       error2: "cellNumError",
       maxLength: "3",
+      key: "8",
     },
     {
       divClassName: "phone-field",
@@ -95,6 +103,7 @@ const ShippingComponent = ({
       maxLength: "3",
       error: "phoneAreaCodeError",
       error2: "phoneNumError",
+      key: "9",
     },
   ];
   return (
@@ -113,7 +122,10 @@ const ShippingComponent = ({
               item.name === "zip"
             ) {
               return (
-                <div className={`flex input-height ${item.gridClass}`}>
+                <div
+                  className={`flex input-height ${item.gridClass}`}
+                  key={item.key}
+                >
                   <h5>{item.h5}</h5>
                   <div className={item.divClassName}>
                     {errorMsg &&
@@ -137,7 +149,10 @@ const ShippingComponent = ({
               item.name === "state"
             ) {
               return (
-                <div className={`flex input-height ${item.gridClass}`}>
+                <div
+                  className={`flex input-height ${item.gridClass}`}
+                  key={item.key}
+                >
                   <h5>{item.h5}</h5>
                   <div className={item.divClassName}>
                     {errorMsg &&
@@ -159,7 +174,10 @@ const ShippingComponent = ({
               );
             } else {
               return (
-                <div className={`flex input-height ${item.gridClass}`}>
+                <div
+                  className={`flex input-height ${item.gridClass}`}
+                  key={item.key}
+                >
                   <h5>{item.h5}</h5>
                   <div className={item.divClassName}>
                     {errorMsg &&

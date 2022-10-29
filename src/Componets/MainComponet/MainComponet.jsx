@@ -6,7 +6,7 @@ class MainComponet extends React.Component {
   constructor() {
     super();
     this.state = {
-      index: 0,
+      index: 1,
     };
   }
 
@@ -14,7 +14,6 @@ class MainComponet extends React.Component {
     this.setState({
       index: data,
     });
-    console.log(data);
   };
 
   render() {
