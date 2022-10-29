@@ -141,7 +141,6 @@ class SingninPage extends React.Component {
         },
         formData: INIT_FORM,
       }));
-      alert("Thank you for creating an account please sign in");
     }
   };
 
@@ -178,7 +177,6 @@ class SingninPage extends React.Component {
     e.preventDefault();
     const checkErrors = this.checkErrorsBeforeSignIn();
     if (!checkErrors) {
-      alert("it works");
       this.props.next(1);
     }
   };
