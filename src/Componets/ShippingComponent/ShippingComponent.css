@@ -1,6 +1,6 @@
 .shipping-component-parent-div {
   grid-area: cart;
-  height: 640px;
+  height: 655px;
   width: 1000px;
 }
 
@@ -24,8 +24,15 @@
     ;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 172px);
+  width: fit-content;
+}
+
 .flex {
   display: flex;
+  
 }
 
 .input-height {
@@ -39,20 +46,21 @@
   font-size: 14px;
 }
 
+.grid > h5,
 .flex > h5, 
 .flex > p {
   margin: 10px;
   margin-bottom: 0;
+  text-align: start;
 }
 
 .address-title-grid-spot {grid-area: addressTitle;}
 .address-title-field {
-  width: 40%;
-  margin-left: 36px;
+  width: 400px
 }
 
 .name-grid-spot {grid-area: name;}
-.name-field {width: 40%;}
+.name-field {width: 400px;}
 
 .address-title-field > h5 {margin-right: 47px;}
 .address-title-field > input,
@@ -65,9 +73,7 @@
 
 .address-grid-spot {grid-area: address}
 .address-field {
-  margin-left: 36px;
-  width: 81%;
-  ;
+  width: 50rem;
 }
 
 .address-field > input {
@@ -76,8 +82,12 @@
   width: 99%;
  
 }
-.zip-grid-spot {grid-area: zip;}
-.zip-code-field {margin-left: 78px;}
+.zip-grid-spot {
+  grid-area: zip;
+  grid-template-columns: repeat(1, 172px 78px);
+}
+
+.zip-code-field {width: fit-content;}
 
 .zip-code-field > input {
   height: 25px;
@@ -104,10 +114,13 @@
   background-color: lightgrey;
 }
 
-.cellphone-grid-spot {grid-area: cellphone;}
+.cellphone-grid-spot {
+  grid-area: cellphone;
+  grid-template-columns: 172px 80px 262px;
+}
+
 .cellphone-field {
   margin-right: 10px;
-  margin-left: 61px;
 }
 
 .cell-area-code-input {
@@ -124,10 +137,13 @@
   align-self: center;
 }
 
-.phone-grid-spot {grid-area: phone;}
+.phone-grid-spot {
+  grid-area: phone;
+  grid-template-columns: 172px 80px 262px;
+}
+
 .phone-field {
   margin-right: 10px;
-  margin-left: 64px;
 }
 
 .phone-area-code-input {
@@ -163,7 +179,7 @@
 .back-btn {
   position: absolute;
   left: 25px;
-  bottom: 0px;
+  bottom: 15px;
 }
 
 .back-btn > input {
@@ -172,4 +188,81 @@
   height: 50px;
   font-weight: 800;
   cursor: pointer;
+}
+
+@media (max-width: 1400px) {
+  .shipping-component-parent-div {
+    width: 800px;
+  }
+
+  .shipping-form {
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas: 
+    "addressTitle addressTitle addressTitle addressTitle"
+    "name name name name"
+    "address address address address"
+    "zip zip zip zip"
+    "country city state state"
+    "cellphone cellphone cellphone cellphone"
+    "phone phone phone phone"
+    ;
+  }
+
+  .address-field {
+    width: 25rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .shipping-component-parent-div {
+    width: 600px;
+    height: 755px;
+  }
+  
+  .shipping-form {
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas: 
+    "addressTitle addressTitle addressTitle addressTitle"
+    "name name name name"
+    "address address address address"
+    "zip country country country"
+    "state state state state"
+    "city city city city"
+    "cellphone cellphone cellphone cellphone"
+    "phone phone phone phone"
+    ;
+  }
+}
+
+@media (max-width: 1000px) {
+  .shipping-component-parent-div {
+    width: 500px;
+  }
+  
+  .shipping-form {
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas: 
+    "addressTitle addressTitle addressTitle addressTitle"
+    "name name name name"
+    "address address address address"
+    "zip zip zip zip"
+    "country country country country"
+    "state state state state"
+    "city city city city"
+    "cellphone cellphone cellphone cellphone"
+    "phone phone phone phone"
+    ;
+  }
+  .address-title-field,
+  .name-field,
+  .address-field {width: 250px;}
+
+  .country-select-div {margin-left: 80px;}
+  .state-select-div {margin-left: 108px;}
+  .city-select-div {margin-left: 118px;}
+
+  .cellphone-grid-spot > div, 
+  .phone-grid-spot > div {width: fit-content;}
+  .cellphone-input,
+  .phone-input {width: 160px;}
 }

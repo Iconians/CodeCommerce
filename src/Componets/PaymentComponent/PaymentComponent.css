@@ -1,6 +1,6 @@
 .payment-parent-div {
   grid-area: cart;
-  height: 640px;
+  height: 655px;
   width: 1000px;
   background-color: white;
   position: relative;
@@ -27,12 +27,17 @@
 }
 
 .payment-flex {
-  display: flex;
+  /* display: flex; */
   height: 60px;
   align-items: end;
+  display: grid;
+  grid-template-columns: repeat(2, 225px);
 }
 
-.payment-flex > h4 {margin: 0;}
+.payment-flex > h4 {
+  margin: 0;
+  text-align: start;
+}
 
 .name-grid-spot {grid-area: name;}
 .name-div {
@@ -40,9 +45,11 @@
   width: 345px;
 }
 .card-grid-spot {grid-area: card;}
+
 .number-div {
   width: 345px;
-  margin-left: 80px;
+  /* margin-left: 80px; */
+  margin-left: 20px;
   position: relative;
   height: 60px;
 }
@@ -69,8 +76,9 @@
 .expire-month-grid-spot {grid-area: expireMonth;}
 
 .month-div {
-  margin-left: 135px;
+  margin-left: 20px;
   margin-right: 20px;
+  width: fit-content;
 }
 
 
@@ -80,11 +88,17 @@
   width: 125px;
 }
 
-.expire-year-grid-spot {grid-area: expireYear;}
+.expire-year-grid-spot {
+  grid-area: expireYear;
+  display: flex;
+  width: fit-content;
+}
 
 .cvv-grid-spot {grid-area: cvv;}
 
-.cvv-div {margin-left: 190px;}
+.cvv-div {
+  width: fit-content;
+  margin-left: 20px;}
 
 .cvv-div > input {
   height: 30px;
@@ -111,3 +125,44 @@
 .payment-btn-disabled > input {background-color: gray;}
 
 .payment-back-btn > input {width: 180px;}
+
+@media (max-width: 1400px) {
+  .payment-parent-div {
+    width: 800px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .payment-parent-div {
+    width: 600px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .payment-parent-div {
+    width: 500px;
+  }
+
+  .payment-flex {
+    grid-template-columns: repeat(1, 225px);
+    height: 90px;
+  }
+ 
+  .name-div,
+  .number-div,
+  .month-div,
+  .cvv-div {margin-left: 5px;}
+
+  .expire-year-grid-spot {
+    position: absolute;
+    top: 244px;
+    left: 160px;
+  }
+
+  .payment-btn-div {
+    width: fit-content;
+    position: absolute;
+    left: 34px;
+    bottom: 110px;
+  }
+}

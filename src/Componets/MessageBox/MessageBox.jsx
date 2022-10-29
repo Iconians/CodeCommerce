@@ -25,13 +25,13 @@ const messageBox = ({ reset, index }) => {
         <div
           className={
             "step-item " +
-            (index === 1 ? "active" : null) +
-            (index >= 2 ? " completed" : null)
+            (index === 1 ? "active " : null) +
+            (index >= 2 ? " completed " : null)
           }
         >
           <div
             className={
-              "step-counter " + (index === 1 ? "step-counter-active" : null)
+              "step-counter " + (index === 1 ? "step-counter-active " : null)
             }
           ></div>
           <div className="step-name ">Delivery</div>
@@ -39,21 +39,21 @@ const messageBox = ({ reset, index }) => {
         <div
           className={
             "step-item " +
-            (index === 2 ? "active" : null) +
-            (index === 3 ? " completed" : null)
+            (index === 2 ? "active " : null) +
+            (index === 3 ? " completed " : null)
           }
         >
           <div
             className={
-              "step-counter " + (index === 2 ? "step-counter-active" : null)
+              "step-counter " + (index === 2 ? "step-counter-active " : null)
             }
           ></div>
           <div className="step-name ">Payment</div>
         </div>
-        <div className={"step-item " + (index === 3 ? "active" : null)}>
+        <div className={"step-item " + (index === 3 ? "active " : null)}>
           <div
             className={
-              "step-counter " + (index === 3 ? "step-counter-active" : null)
+              "step-counter " + (index === 3 ? "step-counter-active " : null)
             }
           ></div>
           <div className="step-name ">Confirmation</div>

@@ -1,0 +1,27 @@
+@media (max-width: 1400px) {
+  .parent-div {
+    width: 1200px;
+  }
+
+  .cart-headings-div {
+    width: 800px
+  }
+}
+
+@media (max-width: 1200px) {
+  .parent-div {
+    width: 1000px;
+  }
+
+  .cart-headings-div {
+    width: 700px
+  }
+
+  .btn-div {
+    right: 25px;
+  }
+
+  .submit-btn {
+    padding: 25px 90px;
+  }
+}

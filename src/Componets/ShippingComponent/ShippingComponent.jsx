@@ -123,7 +123,7 @@ const ShippingComponent = ({
             ) {
               return (
                 <div
-                  className={`flex input-height ${item.gridClass}`}
+                  className={`grid input-height ${item.gridClass}`}
                   key={item.key}
                 >
                   <h5>{item.h5}</h5>
@@ -175,7 +175,7 @@ const ShippingComponent = ({
             } else {
               return (
                 <div
-                  className={`flex input-height ${item.gridClass}`}
+                  className={`grid input-height ${item.gridClass}`}
                   key={item.key}
                 >
                   <h5>{item.h5}</h5>

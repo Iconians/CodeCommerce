@@ -1,5 +1,6 @@
 import React from "react";
 import "./CustomerCartPage.css";
+import "./CustomerCartPageResponsive.css";
 import MousePic from "../assets/mouse-pic.png";
 import KeyBoard from "../assets/keyboard-pic.png";
 import Headphones from "../assets/headphones-pic.png";
